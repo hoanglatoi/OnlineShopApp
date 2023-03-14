@@ -8,8 +8,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineShop.Model.Models
 {
-    [Table("Category")]
-    public partial class Category
+    [Table("PostCategory")]
+    public partial class PostCategory
     {
         public long ID { get; set; }
 
@@ -22,6 +22,7 @@ namespace OnlineShop.Model.Models
         [Display(Name = "Category_MetaTitle")]
         public string?MetaTitle { get; set; }
 
+        // ForeignKey
         [Display(Name = "Category_ParentId")]
         public long? ParentID { get; set; }
 

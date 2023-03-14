@@ -8,17 +8,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineShop.Model.Models
 {
-    [Table("Credential")]
-    [Serializable]
-    public class Credential
+    [Table("ProductTags")]
+    public class ProductTags
     {
         [Key]
-        public string? Id { get; set; }
-        
-        [StringLength(20)]
-        public string? UserGroupID { set; get; }
+        [Column(Order = 1)]
+        public int ProductID { set; get; }
 
+        [Key]
+        [Column(Order = 1)]
         [StringLength(50)]
-        public string? RoleID { set; get; }
+        public string? TagID { set; get; }
     }
 }

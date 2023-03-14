@@ -16,5 +16,9 @@ namespace OnlineShop.Model.Models
 
         [StringLength(50)]
         public string? Name { get; set; }
+
+        [MaxLength(50)]
+        [Required]
+        public string? Type { set; get; }
     }
 }

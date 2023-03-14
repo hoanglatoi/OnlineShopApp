@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Identity;
 namespace OnlineShop.Model.Models
 {
     [Table("Role")]
-    public class Role : IdentityRole
+    public class ApplicationRole : IdentityRole
     {
-        public Role() : base()
+        public ApplicationRole() : base()
         {
 
         }

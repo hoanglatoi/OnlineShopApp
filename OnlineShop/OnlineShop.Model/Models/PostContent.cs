@@ -8,8 +8,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineShop.Model.Models
 {
-    [Table("Content")]
-    public partial class Content
+    [Table("PostContent")]
+    public partial class PostContent
     {
         public long ID { get; set; }
 
@@ -25,6 +25,7 @@ namespace OnlineShop.Model.Models
         [StringLength(250)]
         public string? Image { get; set; }
 
+        // ForeignKey
         public long? CategoryID { get; set; }
 
         [Column(TypeName = "ntext")]

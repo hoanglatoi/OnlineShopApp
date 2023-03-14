@@ -25,7 +25,7 @@ namespace OnlineShop.Model.Models
         [StringLength(50)]
         public string? Address { get; set; }
 
-        [StringLength(250)]
+        [StringLength(500)]
         public string? Content { get; set; }
 
         public DateTime? CreatedDate { get; set; }

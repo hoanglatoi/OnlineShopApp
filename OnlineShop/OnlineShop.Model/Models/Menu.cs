@@ -29,5 +29,11 @@ namespace OnlineShop.Model.Models
         public bool? Status { get; set; }
 
         public int? TypeID { get; set; }
+
+        [Required]
+        public int GroupID { set; get; }
+
+        [ForeignKey("GroupID")]
+        public virtual MenuGroup MenuGroup { set; get; }
     }
 }
