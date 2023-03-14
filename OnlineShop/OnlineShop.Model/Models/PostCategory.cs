@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using OnlineShop.Model.Abstract;
 
 namespace OnlineShop.Model.Models
 {
     [Table("PostCategory")]
-    public partial class PostCategory
+    public partial class PostCategory : Auditable
     {
         public long ID { get; set; }
 
@@ -32,27 +33,6 @@ namespace OnlineShop.Model.Models
         [StringLength(250)]
         [Display(Name = "Category_SeoTitle")]
         public string? SeoTitle { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
-
-        [StringLength(50)]
-        public string? CreatedBy { get; set; }
-
-        public DateTime? ModifiedDate { get; set; }
-
-        [StringLength(50)]
-        public string? ModifiedBy { get; set; }
-
-        [StringLength(250)]
-        [Display(Name = "Category_Metakeyword")]
-        public string? MetaKeywords { get; set; }
-
-        [StringLength(250)]
-        [Display(Name = "Category_MetaDescription")]
-        public string? MetaDescriptions { get; set; }
-
-        [Display(Name = "Category_Status")]
-        public bool? Status { get; set; }
 
         [Display(Name = "Category_ShowOnHome")]
         public bool? ShowOnHome { get; set; }
