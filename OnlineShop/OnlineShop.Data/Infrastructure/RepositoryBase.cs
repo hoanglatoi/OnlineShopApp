@@ -45,9 +45,10 @@ namespace OnlineShop.Data.Infrastructure
         {
             return dbSet.Remove(entity);
         }
-        public virtual Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<T> Delete(int id)
+        public virtual Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<T>? Delete(int id)
         {
             var entity = dbSet.Find(id);
+            if(entity == null) return null;
             return dbSet.Remove(entity);
         }
         public virtual void DeleteMulti(Expression<Func<T, bool>> where)
@@ -57,7 +58,7 @@ namespace OnlineShop.Data.Infrastructure
                 dbSet.Remove(obj);
         }
 
-        public virtual T GetSingleById(int id)
+        public virtual T? GetSingleById(int id)
         {
             return dbSet.Find(id);
         }
@@ -73,7 +74,7 @@ namespace OnlineShop.Data.Infrastructure
             return dbSet.Count(where);
         }
 
-        public IEnumerable<T> GetAll(string[] includes = null)
+        public IEnumerable<T> GetAll(string[]? includes = null)
         {
             //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
             if (includes != null && includes.Count() > 0)
@@ -87,7 +88,7 @@ namespace OnlineShop.Data.Infrastructure
             return dataContext.Set<T>().AsQueryable();
         }
 
-        public T GetSingleByCondition(Expression<Func<T, bool>> expression, string[] includes = null)
+        public T? GetSingleByCondition(Expression<Func<T, bool>> expression, string[]? includes = null)
         {
             if (includes != null && includes.Count() > 0)
             {
@@ -99,7 +100,7 @@ namespace OnlineShop.Data.Infrastructure
             return dataContext.Set<T>().FirstOrDefault(expression);
         }
 
-        public virtual IEnumerable<T> GetMulti(Expression<Func<T, bool>> predicate, string[] includes = null)
+        public virtual IEnumerable<T> GetMulti(Expression<Func<T, bool>> predicate, string[]? includes = null)
         {
             //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
             if (includes != null && includes.Count() > 0)
@@ -113,7 +114,7 @@ namespace OnlineShop.Data.Infrastructure
             return dataContext.Set<T>().Where<T>(predicate).AsQueryable<T>();
         }
 
-        public virtual IEnumerable<T> GetMultiPaging(Expression<Func<T, bool>> predicate, out int total, int index = 0, int size = 20, string[] includes = null)
+        public virtual IEnumerable<T> GetMultiPaging(Expression<Func<T, bool>> predicate, out int total, int index = 0, int size = 20, string[]? includes = null)
         {
             int skipCount = index * size;
             IQueryable<T> _resetSet;

@@ -14,15 +14,15 @@ namespace OnlineShop.Data.Infrastructure
         // Marks an entity to be removed
         Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<T> Delete(T entity);
 
-        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<T> Delete(int id);
+        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<T>? Delete(int id);
 
         //Delete multi records
         void DeleteMulti(Expression<Func<T, bool>> where);
 
         // Get an entity by int id
-        T GetSingleById(int id);
+        T? GetSingleById(int id);
 
-        T GetSingleByCondition(Expression<Func<T, bool>> expression, string[] includes = null);
+        T? GetSingleByCondition(Expression<Func<T, bool>> expression, string[] includes = null);
 
         IEnumerable<T> GetAll(string[] includes = null);
 
