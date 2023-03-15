@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop", "OnlineShop\OnlineShop.csproj", "{60A8A38B-EA87-4E5B-95B5-1C7E29880F29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop", "OnlineShop\OnlineShop.csproj", "{60A8A38B-EA87-4E5B-95B5-1C7E29880F29}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{82059827-5B9C-4F6A-81BA-5D0C991B85C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop.Model", "OnlineShop.Model\OnlineShop.Model.csproj", "{1CC935A6-AF18-4CBD-80A6-94FC4F3C3EE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Model", "OnlineShop.Model\OnlineShop.Model.csproj", "{1CC935A6-AF18-4CBD-80A6-94FC4F3C3EE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop.Data", "OnlineShop.Data\OnlineShop.Data.csproj", "{B7A69730-9E8E-4607-AB23-82B75E119E68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Data", "OnlineShop.Data\OnlineShop.Data.csproj", "{B7A69730-9E8E-4607-AB23-82B75E119E68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineShop.Service", "OnlineShop.Service\OnlineShop.Service.csproj", "{E79E64DC-174C-4ABC-96CA-EFEC73171A0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Service", "OnlineShop.Service\OnlineShop.Service.csproj", "{E79E64DC-174C-4ABC-96CA-EFEC73171A0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperDB", "DapperDB\DapperDB.csproj", "{8EC69113-8F94-438C-82E0-FC5E5C01664D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperDB", "DapperDB\DapperDB.csproj", "{8EC69113-8F94-438C-82E0-FC5E5C01664D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop.Ulities", "OnlineShop.Ulities\OnlineShop.Ulities.csproj", "{CD84D0FD-B060-421B-93C5-01EA04A31737}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{8EC69113-8F94-438C-82E0-FC5E5C01664D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EC69113-8F94-438C-82E0-FC5E5C01664D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EC69113-8F94-438C-82E0-FC5E5C01664D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD84D0FD-B060-421B-93C5-01EA04A31737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD84D0FD-B060-421B-93C5-01EA04A31737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD84D0FD-B060-421B-93C5-01EA04A31737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD84D0FD-B060-421B-93C5-01EA04A31737}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

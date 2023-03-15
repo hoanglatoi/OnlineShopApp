@@ -64,5 +64,7 @@ namespace OnlineShop.ViewModels
         public string? MetaDescription { set; get; }
 
         public bool? Status { set; get; }
+        public string? Tags { get; set; }
+        public bool? HotFlag { get; set; }
     }
 }

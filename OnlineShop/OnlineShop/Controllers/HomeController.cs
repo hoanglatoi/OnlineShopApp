@@ -28,5 +28,29 @@ namespace OnlineShop.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        //[ChildActionOnly]
+        //[OutputCache(Duration = 3600)]
+        //public ActionResult Footer()
+        //{
+        //    var footerModel = _commonService.GetFooter();
+        //    var footerViewModel = Mapper.Map<Footer, FooterViewModel>(footerModel);
+        //    return PartialView(footerViewModel);
+        //}
+
+        //[ChildActionOnly]
+        //public ActionResult Header()
+        //{
+        //    return PartialView();
+        //}
+
+        //[ChildActionOnly]
+        //[OutputCache(Duration = 3600)]
+        //public ActionResult Category()
+        //{
+        //    var model = _productCategoryService.GetAll();
+        //    var listProductCategoryViewModel = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(model);
+        //    return PartialView(listProductCategoryViewModel);
+        //}
     }
 }

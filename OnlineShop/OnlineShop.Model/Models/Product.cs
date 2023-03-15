@@ -50,5 +50,10 @@ namespace OnlineShop.Model.Models
         public DateTime? TopHot { get; set; }
 
         public int? ViewCount { get; set; }
+
+        [StringLength(500)]
+        public string? Tags { get; set; }
+
+        public bool? HotFlag { get; set; }
     }
 }

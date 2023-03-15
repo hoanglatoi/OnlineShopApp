@@ -13,7 +13,7 @@ namespace OnlineShop.Model.Models
     {
         [Key]
         [Column(Order = 1)]
-        public int ProductID { set; get; }
+        public long ProductID { set; get; }
 
         [Key]
         [Column(Order = 2)]
