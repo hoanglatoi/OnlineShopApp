@@ -38,11 +38,6 @@
 		<PackageReference Include="MimeKit" Version="3.3.0" />
 		<PackageReference Include="MailKit" Version="3.3.0" />
 	</ItemGroup>
-	
-
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineShop.Data\OnlineShop.Data.csproj" />
