@@ -5,6 +5,7 @@ using OnlineShop.Service.Services.UserService;
 using OnlineShop.Data.Infrastructure;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using OnlineShop.Data.Repositories;
+using OnlineShop.Service.Services.DataService;
 
 namespace OnlineShop.AppStart
 {
@@ -77,6 +78,20 @@ namespace OnlineShop.AppStart
 
             // Add unit of work
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // Add data services
+            builder.Services.AddScoped<IApplicationGroupService, ApplicationGroupService>();
+            builder.Services.AddScoped<IApplicationRoleService, ApplicationRoleService>();
+            builder.Services.AddScoped<ICommonService, CommonService>();
+            builder.Services.AddScoped<IContactDetailService, ContactDetailService>();
+            builder.Services.AddScoped<IErrorService, ErrorService>();
+            builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IPostCategoryService, PostCategoryService>();
+            builder.Services.AddScoped<IPostService, PostService>();
+            builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IStatisticService, StatisticService>();
 
             builder.Services.AddRazorPages();
 
