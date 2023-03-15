@@ -42,7 +42,7 @@ namespace OnlineShop.Model.Models
 
         public long? CategoryID { get; set; }
 
-        [Column(TypeName = "ntext")]
+        [Column(TypeName = "text")]
         public string? Detail { get; set; }
 
         public int? Warranty { get; set; }

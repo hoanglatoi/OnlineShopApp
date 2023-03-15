@@ -16,7 +16,7 @@ namespace OnlineShop.Model.Models
         public int ProductID { set; get; }
 
         [Key]
-        [Column(Order = 1)]
+        [Column(Order = 2)]
         [StringLength(50)]
         public string? TagID { set; get; }
     }

@@ -13,7 +13,7 @@ namespace OnlineShop.Model.Models
     {
         public int ID { get; set; }
 
-        [Column(TypeName = "ntext")]
+        [Column(TypeName = "text")]
         public string? Content { get; set; }
 
         public bool? Status { get; set; }

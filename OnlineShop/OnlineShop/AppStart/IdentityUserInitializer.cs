@@ -199,19 +199,27 @@ namespace OnlineShop.AppStart
                 var workerRole = await _roleManager!.FindByNameAsync(Role.Worker);
                 if(maintenanceGr != null && adminRole != null)
                 {
-                    _roleGroupRepository!.Add(new ApplicationRoleGroup
+                    var roleGroup = _roleGroupRepository!.GetSingleByCondition(x => x.GroupId == maintenanceGr.ID && x.RoleId == adminRole.Id);
+                    if(roleGroup == null)
                     {
-                        RoleId = adminRole.Id.ToString(),
-                        GroupId = maintenanceGr.ID
-                    });
+                        _roleGroupRepository!.Add(new ApplicationRoleGroup
+                        {
+                            RoleId = adminRole.Id.ToString(),
+                            GroupId = maintenanceGr.ID
+                        });
+                    }               
                 }
                 if (maintenanceGr != null && workerRole != null)
                 {
-                    _roleGroupRepository!.Add(new ApplicationRoleGroup
+                    var roleGroup = _roleGroupRepository!.GetSingleByCondition(x => x.GroupId == maintenanceGr.ID && x.RoleId == workerRole.Id);
+                    if (roleGroup == null)
                     {
-                        RoleId = workerRole.Id.ToString(),
-                        GroupId = maintenanceGr.ID
-                    });
+                        _roleGroupRepository!.Add(new ApplicationRoleGroup
+                        {
+                            RoleId = workerRole.Id.ToString(),
+                            GroupId = maintenanceGr.ID
+                        });
+                    }             
                 }
 
                 // customer
@@ -220,19 +228,27 @@ namespace OnlineShop.AppStart
                 var basicmemberRole = await _roleManager!.FindByNameAsync(Role.BasicMember);
                 if (customerGr != null && vipmemberRole != null)
                 {
-                    _roleGroupRepository!.Add(new ApplicationRoleGroup
+                    var roleGroup = _roleGroupRepository!.GetSingleByCondition(x => x.GroupId == customerGr.ID && x.RoleId == vipmemberRole.Id);
+                    if(roleGroup == null)
                     {
-                        RoleId = vipmemberRole.Id.ToString(),
-                        GroupId = customerGr.ID
-                    });
+                        _roleGroupRepository!.Add(new ApplicationRoleGroup
+                        {
+                            RoleId = vipmemberRole.Id.ToString(),
+                            GroupId = customerGr.ID
+                        });
+                    }                
                 }
                 if (customerGr != null && basicmemberRole != null)
                 {
-                    _roleGroupRepository!.Add(new ApplicationRoleGroup
+                    var roleGroup = _roleGroupRepository!.GetSingleByCondition(x => x.GroupId == customerGr.ID && x.RoleId == basicmemberRole.Id);
+                    if(roleGroup == null)
                     {
-                        RoleId = basicmemberRole.Id.ToString(),
-                        GroupId = customerGr.ID
-                    });
+                        _roleGroupRepository!.Add(new ApplicationRoleGroup
+                        {
+                            RoleId = basicmemberRole.Id.ToString(),
+                            GroupId = customerGr.ID
+                        });
+                    }                 
                 }
             }
             catch (Exception ex)
@@ -291,26 +307,30 @@ namespace OnlineShop.AppStart
         {
             try
             {
-                // maintenancer
+                // admin
                 var maintenanceGr = _groupRepository!.GetSingleByCondition(x => x.Name == Group.Maintenancer);
                 var adminUser = await _userManager!.FindByNameAsync(managerUsername);
                 if (maintenanceGr != null && adminUser != null)
                 {
-                    _userGroupRepository!.Add(new ApplicationUserGroup
+                    var userGroup = _userGroupRepository!.GetSingleByCondition(x => x.UserId == adminUser.Id && x.GroupId == maintenanceGr.ID);
+                    if(userGroup == null)
+                    {
+                        _userGroupRepository!.Add(new ApplicationUserGroup
+                        {
+                            GroupId = maintenanceGr.ID,
+                            UserId = adminUser.Id
+                        });
+                    }                
+                }
+                // worker
+                var workerUser = await _userManager!.FindByNameAsync(workerUsername);
+                if (maintenanceGr != null && workerUser != null)
+                {
+                    var userGroup = _userGroupRepository!.GetSingleByCondition(x => x.UserId == workerUser.Id && x.GroupId == maintenanceGr.ID);
+                    if (userGroup == null)
+                        _userGroupRepository!.Add(new ApplicationUserGroup
                     {
                         GroupId = maintenanceGr.ID,
-                        UserId = adminUser.Id
-                    });
-                }
-
-                //customer
-                var customerGr = _groupRepository!.GetSingleByCondition(x => x.Name == Group.Customer);
-                var workerUser = await _userManager!.FindByNameAsync(workerUsername);
-                if (customerGr != null && workerUser != null)
-                {
-                    _userGroupRepository!.Add(new ApplicationUserGroup
-                    {
-                        GroupId = customerGr.ID,
                         UserId = workerUser.Id
                     });
                 }
@@ -327,7 +347,7 @@ namespace OnlineShop.AppStart
         {
             try
             {
-                // maintenancer
+                // admin
                 var adminUser = await _userManager!.FindByNameAsync(managerUsername);
                 var adminRole = await _roleManager!.FindByNameAsync(Role.Admin);
                 var workerRole = await _roleManager!.FindByNameAsync(Role.Worker);
@@ -335,22 +355,11 @@ namespace OnlineShop.AppStart
                 {
                     await _userManager.AddToRoleAsync(adminUser, adminRole.Name);
                 }
-                if (adminUser != null && workerRole != null)
-                {
-                    await _userManager.AddToRoleAsync(adminUser, workerRole.Name);
-                }
-
-                //customer
+                // worker
                 var workerUser = await _userManager!.FindByNameAsync(workerUsername);
-                var vipmemberRole = await _roleManager!.FindByNameAsync(Role.VipMember);
-                var basicmemberRole = await _roleManager!.FindByNameAsync(Role.BasicMember);
-                if (workerUser != null && vipmemberRole != null)
+                if (workerUser != null && workerRole != null)
                 {
-                    await _userManager.AddToRoleAsync(workerUser, vipmemberRole.Name);
-                }
-                if (workerUser != null && basicmemberRole != null)
-                {
-                    await _userManager.AddToRoleAsync(workerUser, basicmemberRole.Name);
+                    await _userManager.AddToRoleAsync(workerUser, workerRole.Name);
                 }
             }
             catch (Exception ex)

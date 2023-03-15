@@ -29,7 +29,7 @@ namespace OnlineShop.Model.Models
         // ForeignKey
         public long? CategoryID { get; set; }
 
-        [Column(TypeName = "ntext")]
+        [Column(TypeName = "text")]
         public string? Detail { get; set; }
 
         public int? Warranty { get; set; }

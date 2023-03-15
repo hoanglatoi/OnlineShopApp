@@ -30,5 +30,8 @@ namespace OnlineShop.Model.Models
         //}
 
         public virtual IEnumerable<Order>? Orders { set; get; }
+        public string RefreshToken { get; set; } = string.Empty;
+        public DateTime RefreshTokenCreated { get; set; }
+        public DateTime RefreshTokenExpires { get; set; }
     }
 }

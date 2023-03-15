@@ -54,7 +54,17 @@ public class ShopOnlineDbContext : IdentityDbContext<ApplicationUser>
             var tableName = entityType.GetTableName();
             if (tableName!.StartsWith("AspNet"))
             {
-                entityType.SetTableName(tableName.Substring(6));
+                entityType.SetTableName(tableName.Replace("AspNet", "Application"));
+                //if(tableName.Contains("User") || tableName.Contains("Role"))
+                //{
+                //    var newTableName = tableName.Substring(6);
+                //    newTableName = "Application" + newTableName;
+                //    entityType.SetTableName(newTableName);
+                //}
+                //else
+                //{
+                //    entityType.SetTableName(tableName.Substring(6));
+                //}         
             }
         }
 
@@ -77,6 +87,11 @@ public class ShopOnlineDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<ProductTags>().HasKey(u => new
         {
             u.TagID,
+            u.ProductID
+        });
+        builder.Entity<OrderDetail>().HasKey(u => new
+        {
+            u.OrderID,
             u.ProductID
         });
 

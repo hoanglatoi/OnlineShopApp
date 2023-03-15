@@ -25,7 +25,7 @@ namespace OnlineShop.Model.Models
         [StringLength(250)]
         public string? Image { get; set; }
 
-        [Column(TypeName = "ntext")]
+        [Column(TypeName = "text")]
         public string? Detail { get; set; }
 
         public DateTime? CreatedDate { get; set; }
