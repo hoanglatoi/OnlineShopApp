@@ -18,7 +18,7 @@ LoggerConfig.RegisterLoggers(ref builder);
 // Add services to the container.
 DbContextConfig.RegisterDbContext(ref builder);
 IdentityConfig.RegisterIdentity(ref builder);
-ServiceConfig.RegisterServices(ref builder);
+ServiceConfig.RegisterServices(ref builder); 
 
 var app = builder.Build();
 
