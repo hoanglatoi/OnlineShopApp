@@ -22,7 +22,7 @@ namespace OnlineShop.ViewComponents
             _logger = logger;
             _productCategoryService = productCategoryService;
             _commonService = commonService;
-            _productService = productService;
+            _productService = productService; 
         }
 
         //public IViewComponentResult Invoke()
