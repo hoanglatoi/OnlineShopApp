@@ -1,33 +1,22 @@
-﻿@model FooterVM
-<div class="footer">
-  <div class="footer-top">
-    <div class="container">
-      <div class="latter">
-        <h6>Đăng ký nhận thư</h6>
-        <div class="sub-left-right">
-          <form>
-            <input type="text" placeholder="Nhập email tại đây" />
-            <input type="submit" value="Gửi" />
-          </form>
+﻿<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OnlineShop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                </ul>
+                <partial name="_LoginPartial" />
+            </div>
         </div>
-        <div class="clearfix"> </div>
-      </div>
-      <div class="latter-right">
-        <p>Theo dõi:</p>
-        <ul class="face-in-to">
-          <li><a href="#"><span> </span></a></li>
-          <li><a href="#"><span class="facebook-in"> </span></a></li>
-          <div class="clearfix"> </div>
-        </ul>
-        <div class="clearfix"> </div>
-      </div>
-      <div class="clearfix"> </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="container">
-      @*@Html.Raw(Model.Content)*@
-      tessssssssssssssssssssssssssssss
-    </div>
-  </div>
-</div>
+    </nav>
+</header>
