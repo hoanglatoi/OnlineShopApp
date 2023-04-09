@@ -5,17 +5,19 @@ using OnlineShop.ViewModels;
 using OnlineShop.Model.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
+using LoginService.Attributes;
+using OnlineShop.Service.Services.Token;
 
 namespace OnlineShop.Controllers
 {
-    public class HomeController : Controller
+    public class HomeAdminController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeAdminController> _logger;
         IProductCategoryService _productCategoryService;
         IProductService _productService;
         ICommonService _commonService;
 
-        public HomeController(ILogger<HomeController> logger,
+        public HomeAdminController(ILogger<HomeAdminController> logger,
             IProductCategoryService productCategoryService,
             IProductService productService,
             ICommonService commonService)
@@ -26,6 +28,8 @@ namespace OnlineShop.Controllers
             _productService = productService;
         }
 
+        [Authorize]
+        [ClaimRequirementAttribute(group: "Maintenancer", role: "Admin")]
         public IActionResult Index()
         {
             return View();
