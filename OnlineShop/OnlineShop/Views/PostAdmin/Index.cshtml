@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Post For Admin";
+    Layout = "_AdminLayout";
+}
+
+<script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+
+<html>
+<body>
+    <h2> Day La Trang Post Content Cho Admin</h2>
+    <textarea id="NoiDung" name="NoiDung" rows="25" cols="200">
+        Đây là nội dung Test cho phần CKEDITOR
+    </textarea>
+    <script>
+        CKEDITOR.replace("NoiDung");
+    </script>
+
+</body>
+</html>
