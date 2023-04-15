@@ -28,25 +28,15 @@ namespace OnlineShop.AdminController
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(string? imageFilePath)
+        public async Task<IActionResult> Create([Bind("Name,Tags,MetaTitle,ViewCount,Detail,CategoryID,Warranty,MetaDescription")] PostContent PostItem)
         {
-            // Get Lasted ID From DataBase
-            var PostContentOld = from m in _context.PostContents
-                                 select m;
-            
-            PostContent postContent = new PostContent();
-
-            postContent.Name = "Test1";
-            postContent.ID = 2;
-            postContent.Description = imageFilePath;
-
-            _context.Add(postContent);
-            await _context.SaveChangesAsync();
-
-            Console.WriteLine(imageFilePath);
-            Console.WriteLine("Test");
-
-            return View();
+            if (ModelState.IsValid)
+            {
+                _context.Add(PostItem);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(PostItem);
         }
         public async Task<IActionResult> ViewDetails(int? id)
         {

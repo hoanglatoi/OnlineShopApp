@@ -1,4 +1,5 @@
-﻿@{
+﻿@model OnlineShop.Model.Models.PostContent
+@{
     ViewData["Title"] = "Create Post For Admin";
     Layout = "_AdminLayout";
 }
@@ -7,17 +8,86 @@
 
 <html>
 <body>
-    <h2> Day La Trang Create Post Content Cho Admin</h2>
-    <textarea id="NoiDung" name="NoiDung" rows="50" cols="200">
-            Đây là nội dung Test cho phần CKEDITOR
-        </textarea>
-    <script>
-        CKEDITOR.replace("NoiDung");
-    </script>
-    <button onclick="SaveBtn()">
-        Đăng Bài
-    </button>
-    <div id="test"></div>
+    <h3>Nội Dung Cơ Bản</h3>
+    <hr />
+    <form asp-action="Create">
+    <div class="row">
+        <div class="col-md-5">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MetaTitle" class="control-label"></label>
+                <input asp-for="MetaTitle" class="form-control" />
+                <span asp-validation-for="MetaTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ViewCount" class="control-label"></label>
+                <input asp-for="ViewCount" class="form-control" />
+                <span asp-validation-for="ViewCount" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Tags" class="control-label"></label>
+                <input asp-for="Tags" class="form-control" />
+                <span asp-validation-for="Tags" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            @*<div class="form-group">
+                <label asp-for="TopHot" class="control-label"></label>
+                <input asp-for="TopHot" class="form-control" />
+                <span asp-validation-for="TopHot" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="CategoryID" class="control-label"></label>
+                <input asp-for="CategoryID" class="form-control" />
+                <span asp-validation-for="CategoryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Warranty" class="control-label"></label>
+                <input asp-for="Warranty" class="form-control" />
+                <span asp-validation-for="Warranty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MetaDescription" class="control-label"></label>
+                <input asp-for="MetaDescription" class="form-control" />
+                <span asp-validation-for="MetaDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Detail" class="control-label"></label>
+                <input asp-for="Detail" class="form-control" />
+                <span asp-validation-for="Detail" class="text-danger"></span>
+            </div>      
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+                <h3>Nội Dung Chi Tiết Bài Đăng</h3>
+            <hr />
+            <textarea id="NoiDung" name="NoiDung" rows="50" cols="200">
+                Nhập Nội Dung Bài Viết Vào Đây
+            </textarea>
+            <script>
+                CKEDITOR.replace("NoiDung");
+            </script>
+        </div>
+    </div>
+    <div class="form-group" style="padding-top: 10px">
+        <input type="submit" value="Đăng Bài" class="btn btn-primary" />
+    </div>
+    </form>
 </body>
 </html>
 
