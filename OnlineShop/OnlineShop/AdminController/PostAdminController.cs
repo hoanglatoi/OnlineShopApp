@@ -54,7 +54,7 @@ namespace OnlineShop.AdminController
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Tags,MetaTitle,ViewCount,Detail,CategoryID,Warranty,MetaDescription")] PostContent PostItem)
+        public async Task<IActionResult> Edit(long id, [Bind("ID,Name,Tags,MetaTitle,ViewCount,Detail,CategoryID,Warranty,MetaDescription")] PostContent PostItem)
         {
             if (id != PostItem.ID)
             {
@@ -83,7 +83,7 @@ namespace OnlineShop.AdminController
             }
             return View(PostItem);
         }
-        public async Task<IActionResult> ViewDetails(int? id)
+        public async Task<IActionResult> ViewDetails(long? id)
         {
             if (id == null || _context.PostContents == null)
             {
@@ -99,7 +99,38 @@ namespace OnlineShop.AdminController
 
             return View(PostContent_Item);
         }
+        public async Task<IActionResult> Delete(long? id)
+        {
+            if (id == null || _context.PostContents == null)
+            {
+                return NotFound();
+            }
 
+            var PostItem = await _context.PostContents
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (PostItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(PostItem);
+        }
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(long id)
+        {
+            if (_context.PostContents == null)
+            {
+                return Problem("Entity set 'OnlineShopPostContext.Item'  is null.");
+            }
+            var postItem = await _context.PostContents.FindAsync(id);
+            if (postItem != null)
+            {
+                _context.PostContents.Remove(postItem);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
         private bool PostContentExists(long id)
         {
             return (_context.PostContents?.Any(e => e.ID == id)).GetValueOrDefault();
