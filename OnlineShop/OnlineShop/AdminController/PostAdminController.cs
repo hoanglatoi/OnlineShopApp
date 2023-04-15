@@ -38,6 +38,51 @@ namespace OnlineShop.AdminController
             }
             return View(PostItem);
         }
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id == null || _context.PostContents == null)
+            {
+                return NotFound();
+            }
+
+            var PostItem = await _context.PostContents.FindAsync(id);
+            if (PostItem == null)
+            {
+                return NotFound();
+            }
+            return View(PostItem);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Tags,MetaTitle,ViewCount,Detail,CategoryID,Warranty,MetaDescription")] PostContent PostItem)
+        {
+            if (id != PostItem.ID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(PostItem);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PostContentExists(PostItem.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(PostItem);
+        }
         public async Task<IActionResult> ViewDetails(int? id)
         {
             if (id == null || _context.PostContents == null)
@@ -53,6 +98,11 @@ namespace OnlineShop.AdminController
             }
 
             return View(PostContent_Item);
+        }
+
+        private bool PostContentExists(long id)
+        {
+            return (_context.PostContents?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }
