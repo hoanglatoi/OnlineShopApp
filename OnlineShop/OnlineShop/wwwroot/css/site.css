@@ -16,3 +16,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.ViewProduct {
+    width: 400px;
+    height: 550px;
+    background: #b6f200;
+}
+
+.ViewProductImage {
+    width: 350px;
+    height: 350px;
+    background: #ffd800;
+}
+

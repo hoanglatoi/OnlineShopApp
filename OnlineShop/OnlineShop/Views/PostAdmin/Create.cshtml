@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Create Post For Admin";
+    Layout = "_AdminLayout";
+}
+
+<script src="//cdn.ckeditor.com/4.21.0/full/ckeditor.js"></script>
+
+<html>
+<body>
+    <h2> Day La Trang Create Post Content Cho Admin</h2>
+    <textarea id="NoiDung" name="NoiDung" rows="50" cols="200">
+            Đây là nội dung Test cho phần CKEDITOR
+        </textarea>
+    <script>
+        CKEDITOR.replace("NoiDung");
+    </script>
+    <button onclick="SaveBtn()">
+        Đăng Bài
+    </button>
+    <div id="test"></div>
+</body>
+</html>
+
+<script>
+    function SaveBtn() {
+        var editorData = CKEDITOR.instances.NoiDung.getData();
+        document.getElementById("test").innerHTML = editorData;
+        const formData = new FormData();
+        formData.append("imageFilePath", editorData);
+        $.ajax({
+            type: "POST",
+            url: "/PostAdmin/Create",
+            contentType: false,
+            processData: false,
+            async: true,
+            data: formData,
+            success: (data) => {
+                console.log("initData", data);
+            },
+            error: function (response) {
+                console.error(response.responseText);
+                w2ui.grid.unlock();
+            }
+        });
+    }
+</script>

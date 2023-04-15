@@ -40,6 +40,7 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DapperDB\DapperDB.csproj" />
     <ProjectReference Include="..\OnlineShop.Data\OnlineShop.Data.csproj" />
     <ProjectReference Include="..\OnlineShop.Model\OnlineShop.Model.csproj" />
     <ProjectReference Include="..\OnlineShop.Service\OnlineShop.Service.csproj" />
@@ -52,6 +53,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 

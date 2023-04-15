@@ -1,19 +1,69 @@
-﻿@{
+﻿@model IEnumerable<OnlineShop.Model.Models.PostContent>
+
+@{
     ViewData["Title"] = "Post For Admin";
     Layout = "_AdminLayout";
 }
 
-<script src="//cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+<h1>Danh Sách Bài Viết</h1>
 
-<html>
-<body>
-    <h2> Day La Trang Post Content Cho Admin</h2>
-    <textarea id="NoiDung" name="NoiDung" rows="25" cols="200">
-        Đây là nội dung Test cho phần CKEDITOR
-    </textarea>
-    <script>
-        CKEDITOR.replace("NoiDung");
-    </script>
+<p>
+    <a asp-action="Create">Tạo Bài Viết Mới</a>
+</p>
 
-</body>
-</html>
+<form asp-controller="PostAdmin" asp-action="Index" method="get">
+    <p>
+        Tên Bài Viết: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MetaTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Detail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ViewCount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MetaTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Detail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ViewCount)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="ViewDetails" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
