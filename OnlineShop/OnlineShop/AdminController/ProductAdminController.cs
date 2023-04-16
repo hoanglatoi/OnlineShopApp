@@ -37,5 +37,20 @@ namespace OnlineShop.AdminController
 
             return View(await ProductList.ToListAsync());
         }
+        public async Task<IActionResult> ViewProductDetails(long? id)
+        {
+            if (id == null || _context.Products == null)
+            {
+                return NotFound();
+            }
+
+            var ProductItem = await _context.Products.FindAsync(id);
+
+            if (ProductItem == null)
+            {
+                return NotFound();
+            }
+            return View(ProductItem);
+        }
     }
 }

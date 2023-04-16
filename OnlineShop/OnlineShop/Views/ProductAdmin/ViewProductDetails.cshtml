@@ -1,0 +1,48 @@
+﻿@model OnlineShop.Model.Models.Product
+
+@{
+    ViewData["Title"] = "View Product For Admin";
+    Layout = "_AdminLayout";
+}
+<html>
+    <body>
+    <h1> Day la Man Hinh View San Pham @Html.DisplayFor(modelItem => Model.Name)</h1>
+
+    <div class="banhang row">
+        <div class="anhanpham col-sm-4" style="height: 500px; background: #ff0000;">
+
+        </div>
+        <div class="thongtin col-sm-5" style="height: 500px; background: #fffacd;">
+            <div style="padding-top: 10px">
+                <h2>@Html.DisplayFor(modelItem => Model.Name)</h2>
+            </div>
+            <div style="padding-top: 10px">
+                <h2 style="color: #ffd700">
+                    @if ((Model.PromotionPrice != null) || (Model.PromotionPrice < Model.Price))
+                    {
+                        @Html.DisplayFor(modelItem => Model.PromotionPrice)
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => Model.Price)
+                    }
+                    VND
+                </h2>
+                @if ((Model.PromotionPrice != null) || (Model.PromotionPrice < Model.Price))
+                {
+                    <strike>
+                        @Html.DisplayFor(modelItem => Model.Price) VND
+                    </strike>
+                }
+            </div>
+        </div>
+        <div class="muahang col-sm-3" style="height: 500px; background: #0000ff;">
+
+        </div>
+    </div>
+
+    <div class="baiviet">
+        
+    </div>
+    </body>
+</html>
