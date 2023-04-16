@@ -42,6 +42,8 @@ namespace OnlineShop.Model.Models
 
         public long? CategoryID { get; set; }
 
+        public string? CategoryName { get; set;}
+
         [Column(TypeName = "text")]
         public string? Detail { get; set; }
 
