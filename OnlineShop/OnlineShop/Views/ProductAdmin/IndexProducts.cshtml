@@ -1,0 +1,76 @@
+﻿@model IEnumerable<OnlineShop.Model.Models.Product>
+
+@{
+    ViewData["Title"] = "Product For Admin";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-sm-6">
+        <h1>Danh Sách Sản Phẩm</h1>
+    </div>
+    <div class="col-sm-6">
+        <p style="padding-top: 5px">
+            <a asp-action="Create">Thêm Sản Phẩm Mới</a>
+        </p>
+    </div>
+</div>
+
+<form asp-controller="ProductAdmin" asp-action="IndexProducts" method="get" style="padding-top: 20px">
+    <p>
+        Tên Sản Phẩm: <input type="text" name="SearchString" />
+        <input class="btn btn-primary" type="submit" value="Tìm Sản Phẩm" />
+        <a asp-action="IndexProducts" class="btn btn-primary">Xem Tất Cả Sản Phẩm</a>
+        <a asp-action="Index" class="btn btn-primary">Quay Lại Danh Mục</a>
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Tên Sản Phẩm
+            </th>
+            <th>
+                Danh Mục
+            </th>
+            <th>
+                Giá Sản Phẩm
+            </th>
+            <th>
+                Tiêu Đề
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    <a asp-action="IndexProduct" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price) VND
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MetaTitle)
+                </td>
+                <td>
+                    <a asp-action="ProductEdit" asp-route-id="@item.ID">Sửa Thông Tin</a> |
+                    <a asp-action="ViewProductDetails" asp-route-id="@item.ID">Chi Tiết</a> |
+                    <a asp-action="DeleteProduct" asp-route-id="@item.ID">Xóa Sản Phẩm</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

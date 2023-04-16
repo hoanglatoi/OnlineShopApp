@@ -15,8 +15,20 @@ namespace OnlineShop.AdminController
         }
         public async Task<IActionResult> Index(string searchString)
         {
-            var ProductList = from m in _context.Products
-                                  select m;
+            var ProductCategoriesList = from m in _context.ProductCategories select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ProductCategoriesList = ProductCategoriesList.Where(s => s.Name!.Contains(searchString));
+            }
+
+            return View(await ProductCategoriesList.ToListAsync());
+        }
+        public async Task<IActionResult> IndexProducts(string id, string searchString)
+        {
+            var ProductList = from m in _context.Products select m;
+
+            ProductList = ProductList.Where(s => s.CategoryName!.Contains(id));
 
             if (!String.IsNullOrEmpty(searchString))
             {
