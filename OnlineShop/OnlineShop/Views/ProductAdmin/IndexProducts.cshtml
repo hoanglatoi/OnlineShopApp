@@ -82,25 +82,3 @@
         }
     </tbody>
 </table>
-<button type="button" onclick="myFunction()">Click me</button>
-
-<img src="data:image/png;base64,@ViewBag.ImageData" style="height: 400px; width: 400px;"/>
-
-<script>
-    function myFunction() {
-        const formData = new FormData();
-        formData.append("file", "wwwroot/img/testProduct/thuoc1.png");
-        formData.append("folder", "wwwroot/img/Product/Upload/")
-        $.ajax({
-            type: "POST",
-            url: "/ProductAdmin/Test",
-            contentType: false,
-            processData: false,
-            async: true,
-            data: formData,
-            success: (data) => {
-                console.log(data);
-            }
-        });
-    }
-</script>
