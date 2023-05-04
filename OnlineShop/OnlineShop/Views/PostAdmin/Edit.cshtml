@@ -4,7 +4,8 @@
     Layout = "_AdminLayout";
 }
 
-<script src="//cdn.ckeditor.com/4.21.0/full/ckeditor.js"></script>
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckfinder/ckfinder.js"></script>
 
 <html>
 <body>
@@ -30,11 +31,6 @@
                     <input asp-for="ViewCount" class="form-control" />
                     <span asp-validation-for="ViewCount" class="text-danger"></span>
                 </div>
-                @*<div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-                </div>*@
                 <div class="form-group">
                     <label asp-for="Tags" class="control-label"></label>
                     <input asp-for="Tags" class="form-control" />
@@ -44,11 +40,6 @@
             <div class="col-md-5">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID" />
-                @*<div class="form-group">
-                <label asp-for="TopHot" class="control-label"></label>
-                <input asp-for="TopHot" class="form-control" />
-                <span asp-validation-for="TopHot" class="text-danger"></span>
-                </div>*@
                 <div class="form-group">
                     <label asp-for="CategoryID" class="control-label"></label>
                     <input asp-for="CategoryID" class="form-control" />
@@ -80,7 +71,18 @@
                 Nhập Nội Dung Bài Viết Vào Đây
             </textarea>
                 <script>
-                    CKEDITOR.replace("NoiDung");
+                    var editor = CKEDITOR.replace("NoiDung",
+                        {
+                            filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
+                            filebrowserImageBrowseUrl: '/ckfinder/ckfinder.html?type=Images',
+                            filebrowserFlashBrowseUrl: '/ckfinder/ckfinder.html?type=Flash',
+                            filebrowserUploadUrl: '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+                            filebrowserImageUploadUrl: '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+                            filebrowserFlashUploadUrl: '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+                            filebrowserWindowWidth: '1000',
+                            filebrowserWindowHeight: '700'
+                        }
+                    );
                 </script>
             </div>
         </div>
@@ -95,3 +97,4 @@
     </form>
 </body>
 </html>
+

@@ -2,6 +2,7 @@
 using OnlineShop.Data;
 using OnlineShop.Model.Models;
 using Microsoft.EntityFrameworkCore;
+using OnlineShop.Service.Services.FileExcute;
 
 
 namespace OnlineShop.AdminController
@@ -35,6 +36,12 @@ namespace OnlineShop.AdminController
                 ProductList = ProductList.Where(s => s.Name!.Contains(searchString));
             }
 
+            string path = "wwwroot/img/testProduct/thuoc1.png";
+            byte[] imageData = System.IO.File.ReadAllBytes(path);
+            string base64String = Convert.ToBase64String(imageData);
+
+            ViewBag.ImageData = base64String;
+
             return View(await ProductList.ToListAsync());
         }
         public async Task<IActionResult> ViewProductDetails(long? id)
@@ -51,6 +58,27 @@ namespace OnlineShop.AdminController
                 return NotFound();
             }
             return View(ProductItem);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Test()
+        {
+            List<Dictionary<string, object>> records = new List<Dictionary<string, object>>();
+            var item = new Dictionary<string, object>();
+            var formdata = Request.Form;
+            string file = formdata["file"];
+            string folder = formdata["folder"];
+
+            Console.WriteLine(file);
+            Console.WriteLine(folder);
+            byte[] imageData = System.IO.File.ReadAllBytes(file);
+
+            item["return"] = "OK";
+            item["value"] = 1;
+
+            records.Add(item);
+
+            return Json(records);
+
         }
     }
 }

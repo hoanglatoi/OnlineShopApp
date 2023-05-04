@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
 </head>
-
-
+<script src="https://d3js.org/d3.v6.min.js"></script>
 <div class="row">
     <div class="col-sm-6">
         <h1>Danh Sách Sản Phẩm</h1>
@@ -23,13 +22,13 @@
 </div>
 
 <form asp-controller="ProductAdmin" asp-action="IndexProducts" method="get" style="padding-top: 20px">
-    <p class="search-container">
-        Tên Sản Phẩm:
+    <div class="search-container">
+        <p>Tên Sản Phẩm:</p>
         <input type="text" name="SearchString"/>
         <button class="btn btn-search-container" type="submit">Tìm Sản Phẩm</button>
         <button asp-action="IndexProducts" class="btn btn-search-container">Xem Tất Cả Sản Phẩm</button>
         <button asp-action="Index" class="btn btn-search-container">Quay Lại Danh Mục</button>
-    </p>
+    </div>
 </form>
 
 <table class="table">
@@ -83,3 +82,25 @@
         }
     </tbody>
 </table>
+<button type="button" onclick="myFunction()">Click me</button>
+
+<img src="data:image/png;base64,@ViewBag.ImageData" style="height: 400px; width: 400px;"/>
+
+<script>
+    function myFunction() {
+        const formData = new FormData();
+        formData.append("file", "wwwroot/img/testProduct/thuoc1.png");
+        formData.append("folder", "wwwroot/img/Product/Upload/")
+        $.ajax({
+            type: "POST",
+            url: "/ProductAdmin/Test",
+            contentType: false,
+            processData: false,
+            async: true,
+            data: formData,
+            success: (data) => {
+                console.log(data);
+            }
+        });
+    }
+</script>

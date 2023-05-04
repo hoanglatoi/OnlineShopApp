@@ -4,7 +4,8 @@
     Layout = "_AdminLayout";
 }
 
-<script src="//cdn.ckeditor.com/4.21.0/full/ckeditor.js"></script>
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckfinder/ckfinder.js"></script>
 
 <html>
 <body>
@@ -80,7 +81,18 @@
                 Nhập Nội Dung Bài Viết Vào Đây
             </textarea>
             <script>
-                CKEDITOR.replace("NoiDung");
+                var editor = CKEDITOR.replace("NoiDung",
+                    {
+                        filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
+                        filebrowserImageBrowseUrl: '/ckfinder/ckfinder.html?type=Images',
+                        filebrowserFlashBrowseUrl: '/ckfinder/ckfinder.html?type=Flash',
+                        filebrowserUploadUrl: '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+                        filebrowserImageUploadUrl: '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+                        filebrowserFlashUploadUrl: '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+                        filebrowserWindowWidth: '1000',
+                        filebrowserWindowHeight: '700'
+                    }
+                );
             </script>
         </div>
     </div>
