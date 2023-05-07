@@ -60,7 +60,7 @@
                     @Html.DisplayFor(modelItem => item.ID)
                 </td>
                 <td>
-                    <a asp-action="IndexProduct" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
+                    <a asp-action="ViewProductDetails" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CategoryName)

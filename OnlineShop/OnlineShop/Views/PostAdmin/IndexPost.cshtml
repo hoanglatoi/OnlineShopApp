@@ -4,18 +4,23 @@
     ViewData["Title"] = "Post For Admin";
     Layout = "_AdminLayout";
 }
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+</head>
 
 <h1>Danh Sách Bài Viết</h1>
 
 <p>
-    <a asp-action="Create">Tạo Bài Viết Mới</a>
+    <a asp-action="CreatePost" class="btn btn-primary"><i class="bi bi-plus-square"></i> Tạo Bài Viết Mới</a>
 </p>
-
 <form asp-controller="PostAdmin" asp-action="Index" method="get">
     <p>
         Tên Bài Viết: <input type="text" name="SearchString" />
         <input class="btn btn-primary" type="submit" value="Tìm Bài Viết" />
-        <a asp-action="Index" class="btn btn-primary">Xem Tất Cả Bài Viết</a>
+        <a asp-action="IndexPost" class="btn btn-primary">Xem Tất Cả Bài Viết</a>
+        <button asp-action="IndexCategories" class="btn btn-primary">Quay Lại Danh Mục</button>
     </p>
 </form>
 
@@ -32,7 +37,7 @@
                 @Html.DisplayNameFor(model => model.MetaTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Detail)
+                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ViewCount)
@@ -48,21 +53,21 @@
                     @Html.DisplayFor(modelItem => item.ID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    <a asp-action="ViewPostDetails" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MetaTitle)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Detail)
+                    @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ViewCount)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Sửa Bài</a> |
-                    <a asp-action="ViewDetails" asp-route-id="@item.ID">Chi Tiết</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Xóa Bài</a>
+                    <a asp-action="EditPost" asp-route-id="@item.ID">Sửa Bài</a> |
+                    <a asp-action="ViewPostDetails" asp-route-id="@item.ID">Chi Tiết</a> |
+                    <a asp-action="DeletePost" asp-route-id="@item.ID">Xóa Bài</a>
                 </td>
             </tr>
         }

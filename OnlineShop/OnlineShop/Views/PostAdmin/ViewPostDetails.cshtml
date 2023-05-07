@@ -5,10 +5,8 @@
     Layout = "_AdminLayout";
 }
 
-<h1>Chi Tiet Bai Viet</h1>
-
 <div>
-    <h4>Bai Viet</h4>
+    <h2>Thông Tin Bài Viết</h2>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -37,3 +35,14 @@
         </dd>
     </dl>
 </div>
+
+<div>
+    <h2>Nội Dung Bài Viết</h2>
+    <hr />
+    @Html.TextAreaFor(model => model.Detail, new { id = "NoiDung", name = "NoiDung", rows="50", cols="150"})
+</div>
+
+<script>
+    CKEDITOR.replace("NoiDung");
+</script>
+

@@ -1,6 +1,7 @@
-﻿@model OnlineShop.Model.Models.PostContent
+﻿@model OnlineShop.Model.Models.PostCategory
+
 @{
-    ViewData["Title"] = "Edit Post For Admin";
+    ViewData["Title"] = "Edit Post Categories For Admin";
     Layout = "_AdminLayout";
 }
 
@@ -8,47 +9,47 @@
 <script src="~/ckfinder/ckfinder.js"></script>
 
 <html>
-<body>
+    <body>
     <h3>Nội Dung Cơ Bản</h3>
     <hr />
-    <form asp-action="Edit">
+    <form asp-action="EditCategories">
         <div class="row">
             <div class="col-md-5">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID" />
-                <div class="form-group">
+                @*<div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
+                </div>*@
                 <div class="form-group">
                     <label asp-for="MetaTitle" class="control-label"></label>
                     <input asp-for="MetaTitle" class="form-control" />
                     <span asp-validation-for="MetaTitle" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ViewCount" class="control-label"></label>
-                    <input asp-for="ViewCount" class="form-control" />
-                    <span asp-validation-for="ViewCount" class="text-danger"></span>
+                    <label asp-for="ParentID" class="control-label"></label>
+                    <input asp-for="ParentID" class="form-control" />
+                    <span asp-validation-for="ParentID" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Tags" class="control-label"></label>
-                    <input asp-for="Tags" class="form-control" />
-                    <span asp-validation-for="Tags" class="text-danger"></span>
+                    <label asp-for="ShowOnHome" class="control-label"></label>
+                    <input asp-for="ShowOnHome" class="form-control" />
+                    <span asp-validation-for="ShowOnHome" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-5">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID" />
+                @*<div class="form-group">
+                    <label asp-for="DisplayOrder" class="control-label"></label>
+                    <input asp-for="DisplayOrder" class="form-control" />
+                    <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+                </div>*@
                 <div class="form-group">
-                    <label asp-for="CategoryID" class="control-label"></label>
-                    <input asp-for="CategoryID" class="form-control" />
-                    <span asp-validation-for="CategoryID" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Warranty" class="control-label"></label>
-                    <input asp-for="Warranty" class="form-control" />
-                    <span asp-validation-for="Warranty" class="text-danger"></span>
+                    <label asp-for="SeoTitle" class="control-label"></label>
+                    <input asp-for="SeoTitle" class="form-control" />
+                    <span asp-validation-for="SeoTitle" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="MetaDescription" class="control-label"></label>
@@ -56,9 +57,9 @@
                     <span asp-validation-for="MetaDescription" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Detail" class="control-label"></label>
-                    <input asp-for="Detail" class="form-control" />
-                    <span asp-validation-for="Detail" class="text-danger"></span>
+                    <label asp-for="MetaKeyword" class="control-label"></label>
+                    <input asp-for="MetaKeyword" class="form-control" />
+                    <span asp-validation-for="MetaKeyword" class="text-danger"></span>
                 </div>
             </div>
         </div>
@@ -67,9 +68,7 @@
                 <hr />
                 <h3>Nội Dung Chi Tiết Bài Đăng</h3>
                 <hr />
-                <textarea id="NoiDung" name="NoiDung" rows="50" cols="200">
-                Nhập Nội Dung Bài Viết Vào Đây
-            </textarea>
+                @Html.TextAreaFor(model => model.MetaDescription, new { id = "NoiDung", name = "NoiDung", rows="50", cols="150"})
                 <script>
                     var editor = CKEDITOR.replace("NoiDung",
                         {
@@ -95,6 +94,6 @@
             </div>
         </div>
     </form>
-</body>
+    </body>
 </html>
 

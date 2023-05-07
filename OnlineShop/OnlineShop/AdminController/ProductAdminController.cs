@@ -25,11 +25,11 @@ namespace OnlineShop.AdminController
 
             return View(await ProductCategoriesList.ToListAsync());
         }
-        public async Task<IActionResult> IndexProducts(string id, string searchString)
+        public async Task<IActionResult> IndexProducts(string name, string searchString)
         {
             var ProductList = from m in _context.Products select m;
 
-            ProductList = ProductList.Where(s => s.CategoryName!.Contains(id));
+            ProductList = ProductList.Where(s => s.CategoryName!.Contains(name));
 
             if (!String.IsNullOrEmpty(searchString))
             {

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<OnlineShop.Model.Models.PostContent>
+
+@{
+    ViewData["Title"] = "Delete Post For Admin";
+    Layout = "_AdminLayout";
+}
+<html>
+<body>
+    <h1>Delete</h1>
+    <h3>Bạn Có Chắc Chắn Muốn Xóa Danh Mục Gồm Các Bài Viết Này?</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MetaTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Detail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ViewCount)
+                </th>
+                <th>
+                    <p style="margin-bottom: 0px"> Chọn </p>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var idName = "deleteCheckBox" + item.ID.ToString();
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        <a asp-action="ViewPostDetails" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MetaTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ViewCount)
+                    </td>
+                    <td>
+                        <input id=idName class="deleteCheckBox" type="checkbox" checked>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        <button class="btn btn-primary" onclick="SelectAll()">Chọn Tất Cả</button> 
+        <button class="btn btn-primary" onclick="DeSelectAll()">Bỏ Chọn Tất Cả</button>
+    </div>
+    <div style="margin-top: 10px">
+        <form asp-action="Delete">
+            @*<input type="hidden" asp-for="ID" />*@
+            <input type="submit" value="Delete" class="btn btn-danger" /> ||
+            <a asp-action="Index" class="btn btn-primary">Trở Về Trang Danh Sách Bài Viết</a>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    function SelectAll(){
+        var checkBoxList = document.getElementsByClassName("deleteCheckBox");
+        for (var i = 0; i < checkBoxList.length; i++) {
+            checkBoxList[i].checked = true;
+        }
+    }
+
+    function DeSelectAll(){
+        var checkBoxList = document.getElementsByClassName("deleteCheckBox");
+        for (var i = 0; i < checkBoxList.length; i++) {
+            checkBoxList[i].checked = false;
+        }
+    }
+</script>
+
