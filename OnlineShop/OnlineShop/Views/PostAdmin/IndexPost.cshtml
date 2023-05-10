@@ -54,7 +54,7 @@
                     @Html.DisplayFor(modelItem => item.ID)
                 </td>
                 <td>
-                    <a asp-action="ViewPostDetails" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
+                    <a asp-action="PreViewPost" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MetaTitle)

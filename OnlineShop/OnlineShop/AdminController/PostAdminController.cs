@@ -51,7 +51,7 @@ namespace OnlineShop.AdminController
                 PostItem.Status = true;
                 _context.Add(PostItem);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(IndexPost));
+                return RedirectToAction(nameof(IndexCategories));
             }
             return View(PostItem);
         }
@@ -65,14 +65,14 @@ namespace OnlineShop.AdminController
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePost(long? Id, PostContent PostItem)
+        public async Task<IActionResult> CreatePost(long? Id, [Bind("Name,MetaTitle,ViewCount,Tags,CategoryID,Warranty,MetaDescription,Description")]PostContent PostItem)
         {
             if (ModelState.IsValid)
             {
                 PostItem.Status = true;
                 _context.Add(PostItem);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(IndexPost));
+                return RedirectToAction(nameof(IndexPost), new {id = PostItem.CategoryID});
             }
             return View(PostItem);
         }
@@ -162,7 +162,7 @@ namespace OnlineShop.AdminController
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(IndexPost));
+                return RedirectToAction(nameof(IndexPost), new { id = PostItem.CategoryID });
             }
             return View(PostItem);
         }
@@ -213,7 +213,7 @@ namespace OnlineShop.AdminController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(IndexPost));
+            return RedirectToAction(nameof(IndexPost), new { id = postItem.CategoryID });
         }
         public async Task<IActionResult> DeleteCategories(long? id)
         {
@@ -232,6 +232,26 @@ namespace OnlineShop.AdminController
 
             return View(await PosttList.ToListAsync());
         }
+        public async Task<IActionResult> PreViewPost(long? id)
+        {
+            if (id == null || _context.PostContents == null)
+            {
+                return NotFound();
+            }
+            var PostItem = await _context.PostContents
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (PostItem == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ViewData["id"] = PostItem.CategoryID;
+                ViewData["htmlcode"] = PostItem.Detail;
+            }
+            return View();
+        }
+
         private bool PostContentExists(long id)
         {
             return (_context.PostContents?.Any(e => e.ID == id)).GetValueOrDefault();

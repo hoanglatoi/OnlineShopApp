@@ -87,7 +87,7 @@
                 <input type="submit" value="Sửa Bài Viết" class="btn btn-primary" />
             </div>
             <div class="col-md-3" style="padding-left:30px">
-                <a asp-action="IndexPost" class="btn btn-primary">Trở Về Trang Danh Sách Bài Viết</a>
+                <a asp-action="IndexPost" asp-route-id="@Model.CategoryID" class="btn btn-primary">Trở Về Trang Danh Sách Bài Viết</a>
             </div>
         </div>
     </form>

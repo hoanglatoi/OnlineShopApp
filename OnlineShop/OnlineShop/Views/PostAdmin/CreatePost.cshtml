@@ -64,9 +64,6 @@
             <hr />
                 <h3>Nội Dung Chi Tiết Bài Đăng</h3>
             <hr />
-            @*<textarea id="NoiDung" name="NoiDung" rows="50" cols="200">
-                Nhập Nội Dung Bài Viết Vào Đây
-            </textarea>*@
                 @Html.TextAreaFor(model => model.Detail, new { id = "NoiDung", name = "NoiDung", rows="50", cols="150"})
             <script>
                 var editor = CKEDITOR.replace("NoiDung",
@@ -89,7 +86,7 @@
             <input type="submit" value="Đăng Bài" class="btn btn-primary" />
         </div>
         <div class="col-md-3">
-            <a asp-action="Index" class="btn btn-primary">Trở Về Trang Danh Sách Bài Viết</a>
+            <a asp-action="IndexPost" asp-route-id="@Model.CategoryID" class="btn btn-primary">Trở Về Trang Danh Sách Bài Viết</a>
         </div>
     </div>
     </form>
@@ -97,25 +94,5 @@
 </html>
 
 <script>
-    function SaveBtn() {
-        var editorData = CKEDITOR.instances.NoiDung.getData();
-        document.getElementById("test").innerHTML = editorData;
-        const formData = new FormData();
-        formData.append("imageFilePath", editorData);
-        $.ajax({
-            type: "POST",
-            url: "/PostAdmin/Create",
-            contentType: false,
-            processData: false,
-            async: true,
-            data: formData,
-            success: (data) => {
-                console.log("initData", data);
-            },
-            error: function (response) {
-                console.error(response.responseText);
-                w2ui.grid.unlock();
-            }
-        });
-    }
+
 </script>

@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "PreView Post For Admin";
+    Layout = "_AdminLayout";
+    var id = ViewData["id"];
+    var htmlCode = ViewData["htmlcode"];
+}
+<head>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<html>
+    <body>
+    <div class="main">
+        @Html.Raw(htmlCode)
+    </div>
+    <div>
+        <form>
+            <a asp-action="IndexPost" asp-route-id="@id" class="btn btn-primary">Trở Về Trang Danh Sách Bài Viết</a>
+        </form>
+    </div>
+    </body>
+</html>
