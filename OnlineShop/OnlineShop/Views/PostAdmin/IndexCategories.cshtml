@@ -16,14 +16,14 @@
 <h1>Danh Sách Bài Viết</h1>
 
 <p> 
-    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-square"></i> Tạo Danh Mục Bài Viết Mới</a>
+    <a asp-action="CreateCategories" class="btn btn-primary"><i class="bi bi-plus-square"></i> Tạo Danh Mục Bài Viết Mới</a>
 </p>
 
-<form asp-controller="PostAdmin" asp-action="Index" method="get">
+<form asp-controller="PostAdmin" asp-action="IndexCategories" method="get">
     <p>
         Tên Bài Viết: <input type="text" name="SearchString" />
         <input class="btn btn-primary" type="submit" value="Tìm Bài Viết" />
-        <a asp-action="Index" class="btn btn-primary">Xem Tất Cả Bài Viết</a>
+        <a asp-action="IndexCategories" class="btn btn-primary">Xem Tất Cả Bài Viết</a>
     </p>
 </form>
 

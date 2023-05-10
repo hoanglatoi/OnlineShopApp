@@ -33,14 +33,39 @@ namespace OnlineShop.AdminController
             {
                 ProductList = ProductList.Where(s => s.Name!.Contains(searchString));
             }
+            ViewBag.Id = id;
             return View(await ProductList.ToListAsync());
         }
 
-        public IActionResult CreatePost() {
+        public IActionResult CreateCategories()
+        {
             return View();
         }
+
         [HttpPost]
-        public async Task<IActionResult> CreatePost([Bind("Name,Tags,MetaTitle,ViewCount,Detail,CategoryID,Warranty,MetaDescription,Description")] PostContent PostItem)
+        
+        public async Task<IActionResult> CreateCategories(PostCategory PostItem)
+        {
+            if (ModelState.IsValid)
+            {
+                PostItem.Status = true;
+                _context.Add(PostItem);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(IndexPost));
+            }
+            return View(PostItem);
+        }
+
+        public IActionResult CreatePost(long? Id)
+        {
+            var PostItem = new PostContent();
+            PostItem.CategoryID = Id;
+            PostItem.ViewCount = 0;
+            return View(PostItem);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreatePost(long? Id, PostContent PostItem)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +105,7 @@ namespace OnlineShop.AdminController
             return View(PostCategoriesItem);
         }
         [HttpPost]
-        public async Task<IActionResult> EditCategories(long? id, [Bind("ID,Name,MetaTitle,ParentID,ShowOnHome,DisplayOrder,SeoTitle,MetaDescription,MetaKeyword")] PostCategory PostCatgItem)
+        public async Task<IActionResult> EditCategories(long? id, PostCategory PostCatgItem)
         {
             if (id != PostCatgItem.ID)
             {
@@ -111,7 +136,7 @@ namespace OnlineShop.AdminController
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditPost(long id, [Bind("ID,Name,Tags,MetaTitle,ViewCount,Detail,Description,CategoryID,Warranty,MetaDescription")] PostContent PostItem)
+        public async Task<IActionResult> EditPost(long id, PostContent PostItem)
         {
             if (id != PostItem.ID)
             {

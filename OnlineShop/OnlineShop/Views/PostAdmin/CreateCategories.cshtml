@@ -1,0 +1,47 @@
+﻿@model OnlineShop.Model.Models.PostCategory
+@{
+    ViewData["Title"] = "Create Category For Admin";
+    Layout = "_AdminLayout";
+}
+
+<html>
+<body>
+    <h3>Nội Dung Cơ Bản</h3>
+    <hr />
+    <form method="post" asp-action="CreateCategories">
+        <div class="row">
+            <div class="col-md-5">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID" />
+                <div class="form-group">
+                    <label asp-for="MetaTitle" class="control-label"></label>
+                    <input asp-for="MetaTitle" class="form-control" />
+                    <span asp-validation-for="MetaTitle" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID" />
+                <div class="form-group">
+                    <label asp-for="MetaDescription" class="control-label"></label>
+                    <input asp-for="MetaDescription" class="form-control" />
+                    <span asp-validation-for="MetaDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ParentID" class="control-label"></label>
+                    <input asp-for="ParentID" class="form-control" />
+                    <span asp-validation-for="ParentID" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 10px">
+            <div class="col-md-1 form-group">
+                <input type="submit" value="Đăng Bài" class="btn btn-primary" />
+            </div>
+            <div class="col-md-3">
+                <a asp-action="IndexCategories" class="btn btn-primary">Trở Về Trang Danh Sách Bài Viết</a>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

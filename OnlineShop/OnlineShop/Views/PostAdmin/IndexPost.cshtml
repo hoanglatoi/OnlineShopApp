@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Post For Admin";
     Layout = "_AdminLayout";
+    var CategoryID = ViewBag.Id;
 }
 <head>
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
@@ -13,7 +14,7 @@
 <h1>Danh Sách Bài Viết</h1>
 
 <p>
-    <a asp-action="CreatePost" class="btn btn-primary"><i class="bi bi-plus-square"></i> Tạo Bài Viết Mới</a>
+    <a asp-action="CreatePost" asp-route-id="@CategoryID" class="btn btn-primary"><i class="bi bi-plus-square"></i> Tạo Bài Viết Mới</a>
 </p>
 <form asp-controller="PostAdmin" asp-action="Index" method="get">
     <p>

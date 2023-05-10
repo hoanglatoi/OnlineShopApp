@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/css/light.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OnlineShop.styles.css" asp-append-version="true" />
     <script src="~/ckeditor/ckeditor.js"></script>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <script src="~/ckfinder/ckfinder.js"></script>
 </head>
 
@@ -36,33 +37,51 @@
                     </li>
                     <li class="sidebar-item ">
                         <a class="sidebar-link" href="~/PostAdmin/IndexCategories">
-                            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle" style="font-size: 18px">Bài Viết</span>
+                            @*<i class="align-middle" data-feather="sliders"></i> *@
+                            <span class="align-middle" style="font-size: 18px">
+                                <i class='bx bx-book-open'></i>Bài Viết
+                            </span>
                         </a>
                     </li>
                     <li class="sidebar-item ">
                         <a class="sidebar-link" href="~/ProductAdmin">
-                            <i class="align-middle" data-feather="layout"></i> <span class="align-middle" style="font-size: 18px">Sản phẩm</span>
+                            @*<i class="align-middle" data-feather="layout"></i> *@
+                            <span class="align-middle" style="font-size: 18px">
+                                <i class='bx bxs-box'></i>Sản phẩm
+                            </span>
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="~/Home">
-                            <i class="align-middle" data-feather="user"></i> <span class="align-middle" style="font-size: 18px">Slider</span>
+                            @*<i class="align-middle" data-feather="user"></i> *@
+                            <span class="align-middle" style="font-size: 18px">
+                                <i class='bx bx-slideshow'></i>Slider
+                            </span>
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="~/Home">
-                            <i class="align-middle" data-feather="credit-card"></i> <span class="align-middle" style="font-size: 18px">Chat</span>
+                            @*<i class="align-middle" data-feather="credit-card"></i>*@
+                            <span class="align-middle" style="font-size: 18px">
+                                <i class='bx bxs-chat'></i>Chat
+                            </span>
                         </a>
                     </li>
 
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="~/Home">
-                            <i class="align-middle" data-feather="calendar"></i> <span class="align-middle" style="font-size: 18px">Đơn hàng</span>
+                            @*<i class="align-middle" data-feather="calendar"></i> *@
+                            <span class="align-middle" style="font-size: 18px">
+                                <i class='bx bx-list-ul'></i>Đơn hàng
+                            </span>
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="~/Home">
-                            <i class="align-middle" data-feather="user"></i> <span class="align-middle" style="font-size: 18px">Shops</span>
+                            @*<i class="align-middle" data-feather="user"></i> *@
+                            <span class="align-middle" style="font-size: 18px">
+                                <i class='bx bxs-contact'></i>Shops
+                            </span>
                         </a>
                     </li>
                 </ul>
