@@ -25,6 +25,15 @@ namespace OnlineShop.AdminController
 
             return View(await ProductCategoriesList.ToListAsync());
         }
+
+
+        public async Task<IActionResult> IndexCategory()
+        {
+            var ProductCategoriesList = from m in _context.ProductCategories select m;
+            return View(await ProductCategoriesList.ToListAsync());
+        }
+
+
         public async Task<IActionResult> IndexProducts(string name, string searchString)
         {
             var ProductList = from m in _context.Products select m;
