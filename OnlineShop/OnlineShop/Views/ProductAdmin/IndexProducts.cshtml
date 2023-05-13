@@ -24,7 +24,7 @@
 <form asp-controller="ProductAdmin" asp-action="IndexProducts" method="get" style="padding-top: 20px">
     <div class="search-container">
         <p>Tên Sản Phẩm:</p>
-        <input type="text" name="SearchString"/>
+        <input type="text" name="SearchString" placeholder="Nhập Tìm Kiếm" />
         <button class="btn btn-search-container" type="submit">Tìm Sản Phẩm</button>
         <button asp-action="IndexProducts" class="btn btn-search-container">Xem Tất Cả Sản Phẩm</button>
         <button asp-action="Index" class="btn btn-search-container">Quay Lại Danh Mục</button>

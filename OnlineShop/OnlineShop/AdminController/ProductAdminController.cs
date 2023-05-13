@@ -34,22 +34,30 @@ namespace OnlineShop.AdminController
         }
 
 
-        public async Task<IActionResult> IndexProducts(string name, string searchString)
+        public async Task<IActionResult> IndexProducts(string id, string searchString)
         {
             var ProductList = from m in _context.Products select m;
 
-            ProductList = ProductList.Where(s => s.CategoryName!.Contains(name));
+            ProductList = ProductList.Where(s => s.CategoryName!.Contains(id));
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 ProductList = ProductList.Where(s => s.Name!.Contains(searchString));
             }
 
-            string path = "wwwroot/img/testProduct/thuoc1.png";
-            byte[] imageData = System.IO.File.ReadAllBytes(path);
-            string base64String = Convert.ToBase64String(imageData);
+            return View(await ProductList.ToListAsync());
+        }
 
-            ViewBag.ImageData = base64String;
+        public async Task<IActionResult> IndexProductNew(string id, string searchString)
+        {
+            var ProductList = from m in _context.Products select m;
+
+            ProductList = ProductList.Where(s => s.CategoryName!.Contains(id));
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ProductList = ProductList.Where(s => s.Name!.Contains(searchString));
+            }
 
             return View(await ProductList.ToListAsync());
         }
