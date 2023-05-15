@@ -76,26 +76,29 @@ namespace OnlineShop.AdminController
             }
             return View(ProductItem);
         }
-        [HttpPost]
-        public async Task<IActionResult> Test()
+        public async Task<IActionResult> CreateProduct(long? Id)
         {
-            List<Dictionary<string, object>> records = new List<Dictionary<string, object>>();
-            var item = new Dictionary<string, object>();
-            var formdata = Request.Form;
-            string file = formdata["file"];
-            string folder = formdata["folder"];
+            var Item = new Product();
+            var Product_Item = await _context.Products.FirstOrDefaultAsync(m => m.CategoryID == Id);
+            Item.CategoryID = Id;
+            if (Product_Item != null)
+            {
+                Item.CategoryName = Product_Item.CategoryName;
+            }
+            return View(Item);
+        }
 
-            Console.WriteLine(file);
-            Console.WriteLine(folder);
-            byte[] imageData = System.IO.File.ReadAllBytes(file);
-
-            item["return"] = "OK";
-            item["value"] = 1;
-
-            records.Add(item);
-
-            return Json(records);
-
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(long? Id, [Bind("Name,Code,Price,PromotionPrice,Quantity,CategoryID,Warranty,CategoryName,Image")] Product Item)
+        {
+            if (ModelState.IsValid)
+            {
+                Item.Status = true;
+                _context.Add(Item);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(IndexProductNew), new { id = Item.CategoryName });
+            }
+            return View(Item);
         }
     }
 }

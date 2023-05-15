@@ -83,3 +83,32 @@ input:checked + .slider:before {
     .slider.round:before {
         border-radius: 50%;
     }
+
+/*Button CSS*/
+.CreateBtn {
+    border: 0.5px;
+    background-color: #228810;
+    color: white;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.ReturnBtn {
+    border: 0.5px;
+    background-color: #228810;
+    color: white;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.CreateBtn:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.ReturnBtn:hover {
+    background-color: #4CAF50;
+    color: white;
+}

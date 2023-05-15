@@ -12,8 +12,8 @@
     <meta charset="utf-8">
     <title>EShopper - Bootstrap Shop Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -30,6 +30,8 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/Product/style.css" rel="stylesheet">
+    <!-- DUC Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
 </head>
 <body>
     <!-- Topbar Start -->
@@ -171,6 +173,25 @@
                                     <a class="dropdown-item" href="#">Best Rating</a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <!-- Create and Back Button -->
+                    <div class="row">
+                        <div class="col-3">
+                            <button class="CreateBtn">
+                                <a asp-action="CreateProduct" asp-route-id="1" style="color: white">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    Tạo Mới Sản Phẩm
+                                </a>
+                            </button>
+                        </div>
+                        <div class="col-3">
+                            <button class="ReturnBtn">
+                                <a asp-action="IndexCategory" style="color: white">
+                                    <i class="fa fa-backward" aria-hidden="true"></i>
+                                    Quay Lại
+                                </a>
+                            </button>
                         </div>
                     </div>
 
