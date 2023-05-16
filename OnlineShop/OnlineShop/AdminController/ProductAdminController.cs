@@ -100,5 +100,75 @@ namespace OnlineShop.AdminController
             }
             return View(Item);
         }
+
+        public async Task<IActionResult> EditProduct(long? Id)
+        {
+            if (Id == null || _context.Products == null)
+            {
+                return NotFound();
+            }
+
+            var Product_Item = await _context.Products.FindAsync(Id);
+            if (Product_Item == null)
+            {
+                return NotFound();
+            }
+            return View(Product_Item);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProduct(long? Id, [Bind("ID,Name,Code,Price,PromotionPrice,Quantity,CategoryID,Warranty,CategoryName,Image")] Product Item)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Item.Status = true;
+                    _context.Update(Item);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return RedirectToAction(nameof(IndexProductNew), new { id = Item.CategoryName });
+            }
+            return View(Item);
+        }
+
+        public async Task<IActionResult> DeleteProduct(long? id)
+        {
+            if (id == null || _context.PostContents == null)
+            {
+                return NotFound();
+            }
+
+            var PostItem = await _context.Products
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (PostItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(PostItem);
+        }
+
+        [HttpPost, ActionName("DeleteProduct")]
+        public async Task<IActionResult> DeleteConfirmed(long id)
+        {
+            if (_context.Products == null)
+            {
+                return Problem("Entity set 'OnlineShopPostContext.Item'  is null.");
+            }
+            var postItem = await _context.Products.FindAsync(id);
+            if (postItem != null)
+            {
+                _context.Products.Remove(postItem);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(IndexProductNew), new { id = postItem.CategoryName });
+        }
     }
 }
