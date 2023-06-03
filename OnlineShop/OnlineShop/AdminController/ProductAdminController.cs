@@ -76,6 +76,26 @@ namespace OnlineShop.AdminController
             }
             return View(ProductItem);
         }
+
+        public IActionResult CreateCategory()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory([Bind("Name,ParentID,MetaDescription")] ProductCategory Item)
+        {
+            if (ModelState.IsValid)
+            {
+                Item.Status = true;
+                _context.Add(Item);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(IndexCategory));
+            }
+            return View(Item);
+        }
+
+
         public async Task<IActionResult> CreateProduct(long? Id)
         {
             var Item = new Product();

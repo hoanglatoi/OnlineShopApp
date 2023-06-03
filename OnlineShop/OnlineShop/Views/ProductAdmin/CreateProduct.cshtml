@@ -58,14 +58,14 @@
                     <span asp-validation-for="MetaDescription" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Image" class="control-label"></label>
-                    <input asp-for="Image" class="form-control" />
-                    <span asp-validation-for="Image" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <label asp-for="PromotionPrice" class="control-label"></label>
                     <input asp-for="PromotionPrice" class="form-control" />
                     <span asp-validation-for="PromotionPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Image" class="control-label"></label>
+                    <input asp-for="Image" class="form-control" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
                 </div>
             </div>
         </div>
@@ -78,9 +78,31 @@
             </div>
         </div>
     </form>
+    <script>
+        function updateFileName(input) {
+            console.log("test");
+            var fileName = document.getElementById('fileName');
+            if (input.files.length > 0) {
+                fileName.value = input.files[0].name;
+            } else {
+                fileName.value = 'Không có file được chọn';
+            }
+        }
+        function ImagesFileAsURL() {
+            var fileSelected = document.getElementById('img').files;
+            if (fileSelected.length > 0) {
+                var fileToLoad = fileSelected[0];
+                var fileReader = new FileReader();
+                fileReader.onload = function (fileLoaderEvent) {
+                    var srcData = fileLoaderEvent.target.result;
+                    var newImage = document.createElement('img');
+                    newImage.src = srcData;
+                    document.getElementById('displayImg').innerHTML = newImage.outerHTML;
+                }
+                fileReader.readAsDataURL(fileToLoad);
+            }
+        }
+    </script>
+
 </body>
 </html>
-
-<script>
-
-</script>

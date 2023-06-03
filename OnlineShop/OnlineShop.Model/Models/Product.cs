@@ -27,6 +27,7 @@ namespace OnlineShop.Model.Models
         public string? Description { get; set; }
 
         [StringLength(250)]
+        [DataType(DataType.Url)]
         public string? Image { get; set; }
 
         [Column(TypeName = "xml")]
