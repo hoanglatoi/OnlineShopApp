@@ -152,7 +152,9 @@ namespace OnlineShop.Areas.Identity.Pages.Account
                 if (userGroup != null && userGroup.GroupId == 2) // if user is customer
                 {
                     //return BadRequest("Not found user");
-                    return new RedirectToRouteResult(new { page = "/Account/Error", area = "Identity", title = "Error", errormsg = "Not-found-user" });
+                    //return new RedirectToRouteResult(new { page = "/Account/Error", area = "Identity", title = "Error", errormsg = "Not-found-user" });
+                    ModelState.AddModelError(string.Empty, "Not found applicable user");
+                    return Page();
                 }
 
                 // This doesn't count login failures towards account lockout
