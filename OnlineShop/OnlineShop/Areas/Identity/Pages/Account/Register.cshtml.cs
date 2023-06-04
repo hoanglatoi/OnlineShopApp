@@ -17,6 +17,7 @@ using OnlineShop.Data;
 using OnlineShop.Data.Infrastructure;
 using OnlineShop.Data.Repositories;
 using OnlineShop.Model.Models;
+using OnlineShop.Service.Services.Token;
 
 namespace OnlineShop.Areas.Identity.Pages.Account
 {
@@ -26,6 +27,9 @@ namespace OnlineShop.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IApplicationGroupRepository _groupRepository;
+        private readonly IApplicationUserGroupRepository _userGroupRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly RoleManager<ApplicationRole> _roleManager;
         public ShopOnlineDbContext _databaseContext;
 
@@ -35,7 +39,11 @@ namespace OnlineShop.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             RoleManager<ApplicationRole> roleManager,
-            ShopOnlineDbContext databaseContext)
+            ShopOnlineDbContext databaseContext,
+            IApplicationGroupRepository groupRepository,
+            IApplicationUserGroupRepository userGroupRepository,
+            IUnitOfWork unitOfWork
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -43,6 +51,9 @@ namespace OnlineShop.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _roleManager = roleManager;
             _databaseContext = databaseContext;
+            _groupRepository = groupRepository;
+            _userGroupRepository = userGroupRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [BindProperty]
@@ -90,53 +101,78 @@ namespace OnlineShop.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-            //returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
             //var role = _roleManager.FindByIdAsync(Input?.Name).Result;
-            //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            //// Check mail unique
-            //var matchingUser = _databaseContext.Users.FirstOrDefault(candidateUser => candidateUser.Email == Input!.Email);
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            //if (ModelState.IsValid && matchingUser == null)
-            //{
-            //    var user = new BaseUser { UserName = Input?.UserName, Email = Input?.Email };
-            //    var result = await _userManager.CreateAsync(user, Input?.Password);
+            // Check mail unique
+            var matchingUser = _databaseContext.Users.FirstOrDefault(candidateUser => candidateUser.Email == Input!.Email);
 
-            //    if (result.Succeeded)
-            //    {                   
-            //        _logger.LogInformation("User created a new account with password.");
-            //        await _userManager.AddToRoleAsync(user, role.Name);
+            if (ModelState.IsValid && matchingUser == null)
+            {
+                var user = new ApplicationUser { UserName = Input?.UserName, Email = Input?.Email };
+                var result = await _userManager.CreateAsync(user, Input?.Password);
 
-            //        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            //        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            //        var callbackUrl = Url.Page(
-            //            "/Account/ConfirmEmail",
-            //            pageHandler: null,
-            //            values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-            //            protocol: Request.Scheme);
+                if (result.Succeeded)
+                {
+                    // Add usergroup
+                    var customerGr = _groupRepository!.GetSingleByCondition(x => x.Name == Group.Customer);
+                    var customerUser = await _userManager!.FindByNameAsync(Input?.UserName);
+                    if (customerGr != null && customerUser != null)
+                    {
+                        var userGroup = _userGroupRepository!.GetSingleByCondition(x => x.UserId == customerUser.Id && x.GroupId == customerGr.ID);
+                        if (userGroup == null)
+                        {
+                            _userGroupRepository!.Add(new ApplicationUserGroup
+                            {
+                                GroupId = customerGr.ID,
+                                UserId = customerUser.Id
+                            });
+                        }
+                    }
+                    // Add User Role
+                    var basicMemberRole = await _roleManager!.FindByNameAsync(Role.BasicMember);
+                    if (customerUser != null && basicMemberRole != null)
+                    {
+                        await _userManager.AddToRoleAsync(customerUser, basicMemberRole.Name);
+                    }
 
-            //        await _emailSender.SendEmailAsync(Input?.Email, "Confirm your email",
-            //            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl??"")}'>clicking here</a>.");
+                    _unitOfWork!.Commit();
 
-            //        if (_userManager.Options.SignIn.RequireConfirmedAccount)
-            //        {
-            //            return RedirectToPage("RegisterConfirmation", new { email = Input?.Email, returnUrl = returnUrl });
-            //        }
-            //        else
-            //        {
-            //            await _signInManager.SignInAsync(user, isPersistent: false);
-            //            return LocalRedirect(returnUrl);
-            //        }
-            //    }
-            //    foreach (var error in result.Errors)
-            //    {
-            //        ModelState.AddModelError(string.Empty, error.Description);
-            //    }                
-            //}
-            //if (matchingUser != null)
-            //    ModelState.AddModelError(string.Empty, String.Format("Email '{0}' is already taken.", Input?.Email));
+                    _logger.LogInformation("User created a new account with password.");
+                    //await _userManager.AddToRoleAsync(user, role.Name);
 
-            //ViewData["roles"] = _roleManager.Roles.ToList();
-            //// If we got this far, something failed, redisplay form
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                        protocol: Request.Scheme);
+
+                    await _emailSender.SendEmailAsync(Input?.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl ?? "")}'>clicking here</a>.");
+
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        return RedirectToPage("RegisterConfirmation", new { email = Input?.Email, returnUrl = returnUrl });
+                    }
+                    else
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                    }
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            if (matchingUser != null)
+                ModelState.AddModelError(string.Empty, String.Format("Email '{0}' is already taken.", Input?.Email));
+
+            ViewData["roles"] = _roleManager.Roles.ToList();
+            // If we got this far, something failed, redisplay form
             //return Page();
             return Page();
         }
