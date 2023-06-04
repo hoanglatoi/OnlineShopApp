@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using OnlineShop.Model.Models;
+using OnlineShop.Service.Services.Token;
 using System.Text;
 
 namespace OnlineShop.AppStart
@@ -126,6 +127,8 @@ namespace OnlineShop.AppStart
                 defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
                 options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
             });
+
+            builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomClaimsPrincipalFactory>();
         }
     }
 }

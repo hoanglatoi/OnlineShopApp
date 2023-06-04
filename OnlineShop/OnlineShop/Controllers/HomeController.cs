@@ -28,6 +28,9 @@ namespace OnlineShop.Controllers
 
         public IActionResult Index()
         {
+            var identityUser = User;
+            var identityClaim = User.Claims.FirstOrDefault(x => x.Type == "Tesssssssssssss");
+            var isLogin = User?.Identity.IsAuthenticated;
             return View();
         }
         [Authorize]

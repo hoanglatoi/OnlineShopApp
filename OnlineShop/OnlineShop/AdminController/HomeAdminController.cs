@@ -32,6 +32,9 @@ namespace OnlineShop.Controllers
         [ClaimRequirementAttribute(groupName: "Maintenancer", role: "Admin")]
         public IActionResult Index()
         {
+            var identityUser = User;
+            var identityClaim = User.Claims.FirstOrDefault(x => x.Type == "UserName");
+            var isLogin = User?.Identity.IsAuthenticated;
             return View();
         }
 

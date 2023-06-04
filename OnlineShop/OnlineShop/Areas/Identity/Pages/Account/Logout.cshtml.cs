@@ -25,7 +25,7 @@ namespace OnlineShop.Areas.Identity.Pages.Account
             _logger = logger;
             _configuration = configuration;
         }
-
+        [HttpPost]
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
