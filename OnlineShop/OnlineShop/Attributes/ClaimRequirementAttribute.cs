@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
 using System.Text.Json;
+using System.Security.Policy;
 
 namespace LoginService.Attributes
 {
@@ -71,13 +72,16 @@ namespace LoginService.Attributes
             var groupClaim = context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == nameof(AccessToken.GroupName));
             if (groupClaim == null)
             {
-                context.Result = new UnauthorizedObjectResult("Not found group in user info");
+                //context.Result = new UnauthorizedObjectResult("Not found group in user info");
+                context.Result = new RedirectToRouteResult(new { page = "/Account/Error", area = "Identity" , title = "Error", errormsg = "Not-found-group-in-user-info" });
                 return;
             }
 
             if (groupClaim.Value != _groupName)
             {
-                context.Result = new UnauthorizedObjectResult("Unauthorized");
+                //context.Result = new UnauthorizedObjectResult("Unauthorized");
+                //return;
+                context.Result = new RedirectToRouteResult(new {  page = "/Account/AccessDenied", area = "Identity" });
                 return;
             }
 

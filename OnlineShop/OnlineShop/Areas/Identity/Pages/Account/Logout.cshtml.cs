@@ -41,7 +41,31 @@ namespace OnlineShop.Areas.Identity.Pages.Account
             {
                 // This needs to be a redirect so that the browser performs a new
                 // request and the identity for the user gets updated.
-                return RedirectToPage();
+                //return RedirectToPage();
+                returnUrl = Url.Content("~/Identity/Account/Login");
+                return LocalRedirect(returnUrl);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> OnGet(string returnUrl = null)
+        {
+            await _signInManager.SignOutAsync();
+            Response.Cookies.Delete(_configuration.GetSection("CookieOptions:CookieName").Value);
+            Response.Cookies.Delete("refreshToken");
+            Response.Cookies.Delete("userName");
+            _logger.LogInformation("User logged out.");
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                // This needs to be a redirect so that the browser performs a new
+                // request and the identity for the user gets updated.
+                //return RedirectToPage();
+                returnUrl = Url.Content("~/Identity/Account/LoginAdmin");
+                return LocalRedirect(returnUrl);
             }
         }
     }

@@ -142,6 +142,19 @@ namespace OnlineShop.Areas.Identity.Pages.Account
                 {
                     Input!.UNameOrEmail = user.UserName;
                 }
+
+                var userGroup = _applicationUserGroupRepository.GetSingleByCondition(x => x.UserId == user.Id);
+                //if (userGroup == null)
+                //{
+                //    return BadRequest("Not found user in user_group table");
+                //}
+
+                if (userGroup != null && userGroup.GroupId == 2) // if user is customer
+                {
+                    //return BadRequest("Not found user");
+                    return new RedirectToRouteResult(new { page = "/Account/Error", area = "Identity", title = "Error", errormsg = "Not-found-user" });
+                }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 //var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
@@ -154,18 +167,7 @@ namespace OnlineShop.Areas.Identity.Pages.Account
                     {
                         Name = "Maintenancer",
                         ID = 1
-                    };
-
-                    var userGroup = _applicationUserGroupRepository.GetSingleByCondition(x => x.UserId == user.Id);
-                    //if (userGroup == null)
-                    //{
-                    //    return BadRequest("Not found user in user_group table");
-                    //}
-
-                    if (userGroup != null && userGroup.GroupId == 2) // if user is customer
-                    {
-                        return BadRequest("Not found user");
-                    }
+                    };                  
 
                     // Generate token
                     var accessToken = _tokenManager.GenerateAccessToken(user, adminGroup);

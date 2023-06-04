@@ -1,0 +1,12 @@
+﻿@page
+@using OnlineShop.Areas.Identity
+@using OnlineShop.Areas.Identity.Pages
+@model AccountErrorModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<header>
+    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <p class="text-danger">@Model.ErrorMsg</p>
+</header>

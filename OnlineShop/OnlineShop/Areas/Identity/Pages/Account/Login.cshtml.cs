@@ -141,6 +141,18 @@ namespace OnlineShop.Areas.Identity.Pages.Account
                 {
                     Input!.UNameOrEmail = user.UserName;
                 }
+                var userGroup = _applicationUserGroupRepository.GetSingleByCondition(x => x.UserId == user.Id);
+                //if (userGroup == null)
+                //{
+                //    return BadRequest("Not found user in user_group table");
+                //}
+
+                if (userGroup != null && userGroup.GroupId != 2) // if user not customer
+                {
+                    //return BadRequest("Not found user");
+                    return new RedirectToRouteResult(new { page = "/Account/Error", area = "Identity", title = "Error", errormsg = "Not-found-user" });
+                }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 //var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
@@ -154,18 +166,7 @@ namespace OnlineShop.Areas.Identity.Pages.Account
                         Name = "Customer",
                         ID = 2
                     };
-
-                    var userGroup = _applicationUserGroupRepository.GetSingleByCondition(x => x.UserId == user.Id);
-                    //if (userGroup == null)
-                    //{
-                    //    return BadRequest("Not found user in user_group table");
-                    //}
-
-                    if (userGroup != null && userGroup.GroupId != 2) // if user not customer
-                    {
-                        return BadRequest("Not found user");
-                    }
-
+                    
                     // Generate token
                     var accessToken = _tokenManager.GenerateAccessToken(user, customerGroup);
                     var refreshToken = _tokenManager.GenerateRefreshToken(user.UserName);
@@ -311,7 +312,8 @@ namespace OnlineShop.Areas.Identity.Pages.Account
 
             if (userGroup != null && userGroup.GroupId != 2) // if user not customer
             {
-                return BadRequest("Not found user");
+                //return BadRequest("Not found user");
+                return new RedirectToRouteResult(new { page = "/Account/Error", area = "Identity", title = "Error", errormsg = "Not_found_user" });
             }
 
             string accessToken = _tokenManager.GenerateAccessToken(user, customerGroup);

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using OnlineShop.Model.Models;
 using OnlineShop.Service.Services.Token;
@@ -85,9 +86,10 @@ namespace OnlineShop.AppStart
                             }
                             else
                             {
-                                context.Response.StatusCode = 403; //ForbidResult
-                                context.Response.ContentType = "text/plain";
-                                context.Response.WriteAsync("Must login to use this api").Wait();
+                                //context.Response.StatusCode = 403; //ForbidResult
+                                //context.Response.ContentType = "text/plain";
+                                //context.Response.WriteAsync("Must login to use this api").Wait();
+                                context.Response.Redirect("/Identity/Account/Error?title=Error&errormsg=Must-login-to-use-this-api", false);
                             }
                         }
                         return Task.CompletedTask;
