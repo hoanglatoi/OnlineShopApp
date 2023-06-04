@@ -20,6 +20,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace OnlineShop.Service.Services.Token
 {
+    public interface ITokenManager
+    {
+        public string GenerateAccessToken(ApplicationUser user, ApplicationGroup group);
+        public RefreshToken GenerateRefreshToken(string userName);
+    }
     public class TokenManager : ITokenManager
     {
         private readonly ILogger<TokenManager> _logger;

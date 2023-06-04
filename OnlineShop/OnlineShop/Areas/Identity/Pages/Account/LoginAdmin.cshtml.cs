@@ -22,17 +22,17 @@ using OnlineShop.ViewModels;
 namespace OnlineShop.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginModel : PageModel
+    public class LoginAdminModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger<LoginModel> _logger;
+        private readonly ILogger<LoginAdminModel> _logger;
         private readonly ITokenManager _tokenManager;
         private readonly IConfiguration _configuration;
         private readonly IApplicationUserGroupRepository _applicationUserGroupRepository;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, 
-            ILogger<LoginModel> logger,
+        public LoginAdminModel(SignInManager<ApplicationUser> signInManager, 
+            ILogger<LoginAdminModel> logger,
             UserManager<ApplicationUser> userManager,
             ITokenManager tokenManager,
             IConfiguration configuration,
@@ -129,7 +129,8 @@ namespace OnlineShop.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            //returnUrl ??= Url.Content("~/");
+            returnUrl = Url.Content("~/HomeAdmin/Index");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
@@ -149,10 +150,10 @@ namespace OnlineShop.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
                     // Get group
-                    var customerGroup = new ApplicationGroup
+                    var adminGroup = new ApplicationGroup
                     {
-                        Name = "Customer",
-                        ID = 2
+                        Name = "Maintenancer",
+                        ID = 1
                     };
 
                     var userGroup = _applicationUserGroupRepository.GetSingleByCondition(x => x.UserId == user.Id);
@@ -161,13 +162,13 @@ namespace OnlineShop.Areas.Identity.Pages.Account
                     //    return BadRequest("Not found user in user_group table");
                     //}
 
-                    if (userGroup != null && userGroup.GroupId != 2) // if user not customer
+                    if (userGroup != null && userGroup.GroupId == 2) // if user is customer
                     {
                         return BadRequest("Not found user");
                     }
 
                     // Generate token
-                    var accessToken = _tokenManager.GenerateAccessToken(user, customerGroup);
+                    var accessToken = _tokenManager.GenerateAccessToken(user, adminGroup);
                     var refreshToken = _tokenManager.GenerateRefreshToken(user.UserName);
                     bool ret = await SetRefreshToken(refreshToken, user);
 
@@ -181,7 +182,6 @@ namespace OnlineShop.Areas.Identity.Pages.Account
                         Domain = _configuration.GetSection("CookieOptions:Domain").Value
                     };
                     Response.Cookies.Append(_configuration.GetSection("CookieOptions:CookieName").Value, accessToken, cookieOptions);
-
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -203,6 +203,7 @@ namespace OnlineShop.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
         #region Private method
         private DateTime GetExpire()
         {
@@ -298,10 +299,10 @@ namespace OnlineShop.Areas.Identity.Pages.Account
             }
 
             // Get group
-            var customerGroup = new ApplicationGroup
+            var adminGroup = new ApplicationGroup
             {
-                Name = "Customer",
-                ID = 2
+                Name = "Maintenancer",
+                ID = 1
             };
             var userGroup = _applicationUserGroupRepository.GetSingleByCondition(x => x.UserId == user.Id);
             //if (userGroup == null)
@@ -309,12 +310,11 @@ namespace OnlineShop.Areas.Identity.Pages.Account
             //    return BadRequest("Not found user in user_group table");
             //}
 
-            if (userGroup != null && userGroup.GroupId != 2) // if user not customer
+            if (userGroup != null && userGroup.GroupId == 2) // if user is customer
             {
                 return BadRequest("Not found user");
             }
-
-            string accessToken = _tokenManager.GenerateAccessToken(user, customerGroup);
+            string accessToken = _tokenManager.GenerateAccessToken(user, adminGroup);
             var newRefreshToken = _tokenManager.GenerateRefreshToken(user.UserName);
             bool ret = await SetRefreshToken(newRefreshToken, user);
             if (ret == false)
@@ -339,7 +339,7 @@ namespace OnlineShop.Areas.Identity.Pages.Account
                     Secure = _configuration.GetSection("CookieOptions:Secure").Get<bool>(),
                     Domain = _configuration.GetSection("CookieOptions:Domain").Value
                 };
-                Response.Cookies.Append(_configuration.GetSection("CookieOptions:CookieName").Value, accessToken, cookieOptions);           
+                Response.Cookies.Append(_configuration.GetSection("CookieOptions:CookieName").Value, accessToken, cookieOptions);
             }
 
             return new OkObjectResult(returnUserInfo);

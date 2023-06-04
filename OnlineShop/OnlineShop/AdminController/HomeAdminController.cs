@@ -28,8 +28,8 @@ namespace OnlineShop.Controllers
             _productService = productService;
         }
 
-        //[Authorize]
-        //[ClaimRequirementAttribute(group: "Maintenancer", role: "Admin")]
+        [Authorize]
+        [ClaimRequirementAttribute(groupName: "Maintenancer", role: "Admin")]
         public IActionResult Index()
         {
             return View();

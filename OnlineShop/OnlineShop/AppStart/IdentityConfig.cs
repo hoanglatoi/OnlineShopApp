@@ -86,7 +86,7 @@ namespace OnlineShop.AppStart
                             {
                                 context.Response.StatusCode = 403; //ForbidResult
                                 context.Response.ContentType = "text/plain";
-                                context.Response.WriteAsync("Must login to ues this api").Wait();
+                                context.Response.WriteAsync("Must login to use this api").Wait();
                             }
                         }
                         return Task.CompletedTask;
