@@ -21,6 +21,8 @@
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
             <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Change Password</a>
+            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Manage/Email">Change Email</a>
         </form>
     </div>
 </div>

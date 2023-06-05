@@ -9,18 +9,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using OnlineShop.Model.Models;
 
 namespace OnlineShop.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
 
         public ChangePasswordModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<ChangePasswordModel> logger)
         {
             _userManager = userManager;
@@ -121,7 +122,9 @@ namespace OnlineShop.Areas.Identity.Pages.Account.Manage
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
 
-            return RedirectToPage();
+            //return RedirectToPage();
+            var returnUrl = Url.Content("~/Identity/Account/Manage/Index");
+            return LocalRedirect(returnUrl);
         }
     }
 }
