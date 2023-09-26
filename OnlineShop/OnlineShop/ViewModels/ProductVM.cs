@@ -40,6 +40,8 @@ namespace OnlineShop.ViewModels
 
         public long? CategoryID { get; set; }
 
+        public string? CategoryName { get; set; }
+
         public string? Detail { get; set; }
 
         public int? Warranty { get; set; }

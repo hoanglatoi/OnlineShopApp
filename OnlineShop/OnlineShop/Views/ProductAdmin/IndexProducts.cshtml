@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OnlineShop.Model.Models.Product>
+﻿@model IEnumerable<OnlineShop.ViewModels.ProductVM>
 
 @{
     ViewData["Title"] = "Product For Admin";
@@ -63,7 +63,7 @@
                     <a asp-action="ViewProductDetails" asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CategoryName)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
                     <p style="margin-right: 0px"> 
@@ -74,7 +74,7 @@
                     @Html.DisplayFor(modelItem => item.MetaTitle)
                 </td>
                 <td>
-                    <a asp-action="ProductEdit" asp-route-id="@item.ID">Sửa Thông Tin</a> |
+                    <a asp-action="EditProduct" asp-route-id="@item.ID">Sửa Thông Tin</a> |
                     <a asp-action="ViewProductDetails" asp-route-id="@item.ID">Chi Tiết</a> |
                     <a asp-action="DeleteProduct" asp-route-id="@item.ID">Xóa Sản Phẩm</a>
                 </td>

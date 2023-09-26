@@ -3,7 +3,8 @@ using OnlineShop.Data;
 using OnlineShop.Model.Models;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Service.Services.FileExcute;
-
+using Microsoft.AspNetCore.Authorization;
+using OnlineShop.ViewModels;
 
 namespace OnlineShop.AdminController
 {
@@ -14,6 +15,8 @@ namespace OnlineShop.AdminController
         {
             _context = context;
         }
+
+        [Authorize]
         public async Task<IActionResult> Index(string searchString)
         {
             var ProductCategoriesList = from m in _context.ProductCategories select m;
@@ -23,18 +26,35 @@ namespace OnlineShop.AdminController
                 ProductCategoriesList = ProductCategoriesList.Where(s => s.Name!.Contains(searchString));
             }
 
-            return View(await ProductCategoriesList.ToListAsync());
+            List<ProductCategoryVM> productCategoryVMList = new List<ProductCategoryVM>();
+
+            foreach (ProductCategory item in await ProductCategoriesList.ToListAsync())
+            {
+                ProductCategoryVM productCategoryVM = AutoMap.Instance!.Mapper.Map<ProductCategoryVM>(item);
+                productCategoryVMList.Add(productCategoryVM);
+            }
+
+            return View(productCategoryVMList);
         }
 
-
+        [Authorize]
         public async Task<IActionResult> IndexCategory()
         {
             var ProductCategoriesList = from m in _context.ProductCategories select m;
-            return View(await ProductCategoriesList.ToListAsync());
+
+            List<ProductCategoryVM> productCategoryVMList = new List<ProductCategoryVM>();
+
+            foreach (ProductCategory item in await ProductCategoriesList.ToListAsync())
+            {
+                ProductCategoryVM productCategoryVM = AutoMap.Instance!.Mapper.Map<ProductCategoryVM>(item);
+                productCategoryVMList.Add(productCategoryVM);
+            }
+
+            return View(productCategoryVMList);
         }
 
-
-        public async Task<IActionResult> IndexProducts(string id, string searchString)
+        [Authorize]
+        public IActionResult IndexProducts(string id, string searchString)
         {
             var ProductList = from m in _context.Products select m;
 
@@ -45,10 +65,19 @@ namespace OnlineShop.AdminController
                 ProductList = ProductList.Where(s => s.Name!.Contains(searchString));
             }
 
-            return View(await ProductList.ToListAsync());
+            List<ProductVM> ProductVMList = new List<ProductVM>();
+
+            foreach(Product item in ProductList)
+            {
+                ProductVM productVM = AutoMap.Instance!.Mapper.Map<ProductVM>(item);
+                ProductVMList.Add(productVM);
+            }
+
+            return View(ProductVMList);
         }
 
-        public async Task<IActionResult> IndexProductNew(string id, string searchString)
+        [Authorize]
+        public  IActionResult IndexProductNew(string id, string searchString)
         {
             var ProductList = from m in _context.Products select m;
 
@@ -59,8 +88,18 @@ namespace OnlineShop.AdminController
                 ProductList = ProductList.Where(s => s.Name!.Contains(searchString));
             }
 
-            return View(await ProductList.ToListAsync());
+            List<ProductVM> ProductVMList = new List<ProductVM>();
+
+            foreach (Product item in ProductList)
+            {
+                ProductVM productVM = AutoMap.Instance!.Mapper.Map<ProductVM>(item);
+                ProductVMList.Add(productVM);
+            }
+
+            return View(ProductVMList);
         }
+
+        [Authorize]
         public async Task<IActionResult> ViewProductDetails(long? id)
         {
             if (id == null || _context.Products == null)
@@ -74,53 +113,63 @@ namespace OnlineShop.AdminController
             {
                 return NotFound();
             }
-            return View(ProductItem);
+
+            ProductVM productVM = AutoMap.Instance!.Mapper.Map<ProductVM>(ProductItem);
+
+            return View(productVM);
         }
 
+        [Authorize]
         public IActionResult CreateCategory()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CreateCategory([Bind("Name,ParentID,MetaDescription")] ProductCategory Item)
+        public async Task<IActionResult> CreateCategory([Bind("Name,ParentID,MetaDescription")] ProductCategoryVM productCategory)
         {
             if (ModelState.IsValid)
             {
+                ProductCategory Item = AutoMap.Instance!.Mapper.Map<ProductCategory>(productCategory);
                 Item.Status = true;
                 _context.Add(Item);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(IndexCategory));
             }
-            return View(Item);
+
+            return View(productCategory);
         }
 
-
+        [Authorize]
         public async Task<IActionResult> CreateProduct(long? Id)
         {
-            var Item = new Product();
+            var ItemVM = new ProductVM();
             var Product_Item = await _context.Products.FirstOrDefaultAsync(m => m.CategoryID == Id);
-            Item.CategoryID = Id;
+            ItemVM.CategoryID = Id;
             if (Product_Item != null)
             {
-                Item.CategoryName = Product_Item.CategoryName;
+                ItemVM.Name = Product_Item.CategoryName;
             }
-            return View(Item);
+            return View(ItemVM);
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(long? Id, [Bind("Name,Code,Price,PromotionPrice,Quantity,CategoryID,Warranty,CategoryName,Image")] Product Item)
+        public async Task<IActionResult> CreateProduct(long? Id, [Bind("Name,Code,Price,PromotionPrice,Quantity,CategoryID,Warranty,Name,Image")] ProductVM productVM)
         {
             if (ModelState.IsValid)
             {
+                Product Item = AutoMap.Instance!.Mapper.Map<Product>(productVM);
                 Item.Status = true;
                 _context.Add(Item);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(IndexProductNew), new { id = Item.CategoryName });
+                return RedirectToAction(nameof(IndexProducts), new { id = Item.CategoryName });
             }
-            return View(Item);
+            return View(productVM);
         }
 
+        [Authorize]
         public async Task<IActionResult> EditProduct(long? Id)
         {
             if (Id == null || _context.Products == null)
@@ -133,16 +182,21 @@ namespace OnlineShop.AdminController
             {
                 return NotFound();
             }
-            return View(Product_Item);
+
+            ProductVM ItemVM = AutoMap.Instance!.Mapper.Map<ProductVM>(Product_Item);
+
+            return View(ItemVM);
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> EditProduct(long? Id, [Bind("ID,Name,Code,Price,PromotionPrice,Quantity,CategoryID,Warranty,CategoryName,Image")] Product Item)
+        public async Task<IActionResult> EditProduct(long? Id, [Bind("ID,Name,Code,Price,PromotionPrice,Quantity,CategoryID,Warranty,CategoryName,Image")] ProductVM productVM)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
+                    Product Item = AutoMap.Instance!.Mapper.Map<Product>(productVM);
                     Item.Status = true;
                     _context.Update(Item);
                     await _context.SaveChangesAsync();
@@ -151,28 +205,31 @@ namespace OnlineShop.AdminController
                 {
                     throw;
                 }
-                return RedirectToAction(nameof(IndexProductNew), new { id = Item.CategoryName });
+                return RedirectToAction(nameof(IndexProducts), new { id = productVM.CategoryName });
             }
-            return View(Item);
+            return View(productVM);
         }
 
+        [Authorize]
         public async Task<IActionResult> DeleteProduct(long? id)
         {
-            if (id == null || _context.PostContents == null)
+            if (id == null || _context.Products == null)
             {
                 return NotFound();
             }
 
-            var PostItem = await _context.Products
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (PostItem == null)
+            var ProductItem = await _context.Products.FirstOrDefaultAsync(m => m.ID == id);
+            if (ProductItem == null)
             {
                 return NotFound();
             }
 
-            return View(PostItem);
+            ProductVM ItemVM = AutoMap.Instance!.Mapper.Map<ProductVM>(ProductItem);
+
+            return View(ItemVM);
         }
 
+        [Authorize]
         [HttpPost, ActionName("DeleteProduct")]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
@@ -188,7 +245,7 @@ namespace OnlineShop.AdminController
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(IndexProductNew), new { id = postItem.CategoryName });
+            return RedirectToAction(nameof(IndexProducts), new { id = postItem!.CategoryName });
         }
     }
 }

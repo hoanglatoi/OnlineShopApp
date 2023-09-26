@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OnlineShop.Model.Models.PostContent>
+﻿@model IEnumerable<OnlineShop.ViewModels.PostCategoryVM>
 
 @{
     ViewData["Title"] = "Delete Post For Admin";
@@ -21,12 +21,6 @@
                     @Html.DisplayNameFor(model => model.MetaTitle)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Detail)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ViewCount)
-                </th>
-                <th>
                     <p style="margin-bottom: 0px"> Chọn </p>
                 </th>
             </tr>
@@ -44,12 +38,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.MetaTitle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Detail)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ViewCount)
                     </td>
                     <td>
                         <input id=idName class="deleteCheckBox" type="checkbox" checked>

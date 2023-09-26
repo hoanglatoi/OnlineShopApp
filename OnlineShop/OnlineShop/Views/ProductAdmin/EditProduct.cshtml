@@ -1,4 +1,4 @@
-﻿@model OnlineShop.Model.Models.Product
+﻿@model OnlineShop.ViewModels.ProductVM
 @{
     ViewData["Title"] = "Edit Product For Admin";
     Layout = "_AdminLayout";
@@ -14,14 +14,14 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID" />
                 <div class="form-group">
-                    <label asp-for="CategoryName" class="control-label"></label>
-                    <input asp-for="CategoryName" class="form-control" />
-                    <span asp-validation-for="CategoryName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoryName" class="control-label"></label>
+                    <input asp-for="CategoryName" class="form-control" />
+                    <span asp-validation-for="CategoryName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="MetaTitle" class="control-label"></label>
@@ -74,7 +74,7 @@
                 <input type="submit" value="Sửa Sản Phẩm" class="btn btn-primary" />
             </div>
             <div class="col-md-3">
-                <a asp-action="IndexProductNew" asp-route-id="@Model.CategoryName" class="btn btn-primary">Quay Lại</a>
+                <a asp-action="IndexProducts" asp-route-id="@Model.CategoryName" class="btn btn-primary">Quay Lại</a>
             </div>
         </div>
     </form>
