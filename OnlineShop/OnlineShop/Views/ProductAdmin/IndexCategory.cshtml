@@ -1,155 +1,70 @@
 ﻿@model IEnumerable<OnlineShop.ViewModels.ProductCategoryVM>
 
 @{
-    ViewData["Title"] = "Edit Post Categories For Admin";
+    ViewData["Title"] = "ProductCategory For Admin";
     Layout = "_AdminLayout";
 }
-<!DOCTYPE html>
-
-<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>EShopper - Bootstrap Shop Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
-
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="~/css/Product/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
 </head>
-<body>
-    <!-- Topbar Start -->
-    <div class="container-fluid">
-        <div class="row align-items-center py-3 px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
-                <a href="" class="text-decoration-none">
-                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">JP</span>Shopper </h1>
-                </a>
-            </div>
-            <div class="col-lg-6 col-6 text-left">
-                <form action="">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Nhập Tìm Kiếm">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-                <a href="" class="btn border">
-                    <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
-            </div>
-        </div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <h1>Danh Sách Sản Phẩm</h1>
     </div>
-    <!-- Topbar End -->
-    <!-- Shop Start -->
-    <div class="container-fluid pt-5">
-        <div class="row px-xl-5">
-            <!-- Shop Product Start -->
-            <div class="col-15 col-md-18">
-                <div class="row pb-3">
-                    <div style="margin-bottom: 10px">
-                        <a class="btn btn-primary" asp-action="CreateCategory">Tạo Danh Mục Sản Phẩm</a>
-                    </div>
-                    <div class="col-15 pb-1">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Nhập Tìm Kiếm">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text bg-transparent text-primary">
-                                            <i class="fa fa-search"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="dropdown ml-4">
-                                <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                    Sort by
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                    <a class="dropdown-item" href="#">Latest</a>
-                                    <a class="dropdown-item" href="#">Popularity</a>
-                                    <a class="dropdown-item" href="#">Best Rating</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- List Product Start -->
-                    @foreach (var item in Model)
-                    {
-                        <div class="col-4 pb-1">
-                            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                                <p class="text-right">15 Products</p>
-                                <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                                    <img class="img-fluid" src="~/img/testProduct/product-3.png" alt="">
-                                </a>
-                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                    <h6><a asp-action="IndexProductNew" asp-route-id="@item.Name">@Html.DisplayFor(modelItem => item.Name)</a></h6>
-                                </div>
-                                <div class="card-footer d-flex justify-content-between bg-light border">
-                                    <a href="IndexProducts/@item.Name" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-2"></i>Edit Category</a>
-                                    <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-trash text-primary mr-2"></i>Delete Category</a>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    <!-- List Product End -->
-
-                    <div class="col-12 pb-1">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center mb-3">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            <!-- Shop Product End -->
-        </div>
+    <div class="col-sm-6">
+        <button class="CreateBtn" asp-action="Create">
+            <i class="bi bi-plus-square"></i> Thêm Danh Mục Sản Phẩm Mới
+        </button>
     </div>
-    <!-- Shop End -->
-    <!-- Template Javascript -->
-    <script src="~/js/main.js"></script>
-</body>
+</div>
 
-</html>
+<form asp-controller="ProductAdmin" asp-action="Index" method="get" style="padding-top: 20px">
+    <p class="search-container">
+        Tên Danh Mục: 
+        <input type="text" name="SearchString" placeholder="Nhập Tìm Kiếm" />
+        <button class="btn btn-search-container" type="submit">Tìm Danh Mục</button>
+        <button asp-action="Index" class="btn btn-search-container">Xem Tất Cả Danh Mục</button>
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Tên Danh Mục
+            </th>
+            <th>
+                Tiêu Đề
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    <a asp-action="IndexProducts" asp-route-id="@item.Name">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MetaTitle)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Sửa Thông Tin</a> |
+                    <a asp-action="ViewDetails" asp-route-id="@item.ID">Chi Tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Xóa Danh Mục</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

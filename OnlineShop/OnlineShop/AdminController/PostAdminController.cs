@@ -33,7 +33,7 @@ namespace OnlineShop.AdminController
                 postCategoryVMList.Add(postCategoryVM);
             }
 
-            return View(postCategoryVMList);
+            return View(postCategoryVMList.OrderBy(s => s.ID));
         }
 
         [Authorize]
@@ -57,7 +57,7 @@ namespace OnlineShop.AdminController
             }
 
             ViewBag.Id = id;
-            return View(postContentVMList);
+            return View(postContentVMList.OrderBy(s => s.ID));
         }
 
         public IActionResult CreateCategories()

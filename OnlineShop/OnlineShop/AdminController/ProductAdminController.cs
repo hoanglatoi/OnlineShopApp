@@ -34,7 +34,7 @@ namespace OnlineShop.AdminController
                 productCategoryVMList.Add(productCategoryVM);
             }
 
-            return View(productCategoryVMList);
+            return View(productCategoryVMList.OrderBy(s => s.ID));
         }
 
         [Authorize]
@@ -50,7 +50,7 @@ namespace OnlineShop.AdminController
                 productCategoryVMList.Add(productCategoryVM);
             }
 
-            return View(productCategoryVMList);
+            return View(productCategoryVMList.OrderBy(s => s.ID));
         }
 
         [Authorize]
@@ -73,30 +73,7 @@ namespace OnlineShop.AdminController
                 ProductVMList.Add(productVM);
             }
 
-            return View(ProductVMList);
-        }
-
-        [Authorize]
-        public  IActionResult IndexProductNew(string id, string searchString)
-        {
-            var ProductList = from m in _context.Products select m;
-
-            ProductList = ProductList.Where(s => s.CategoryName!.Contains(id));
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                ProductList = ProductList.Where(s => s.Name!.Contains(searchString));
-            }
-
-            List<ProductVM> ProductVMList = new List<ProductVM>();
-
-            foreach (Product item in ProductList)
-            {
-                ProductVM productVM = AutoMap.Instance!.Mapper.Map<ProductVM>(item);
-                ProductVMList.Add(productVM);
-            }
-
-            return View(ProductVMList);
+            return View(ProductVMList.OrderBy(s => s.ID));
         }
 
         [Authorize]
